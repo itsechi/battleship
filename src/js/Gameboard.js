@@ -4,17 +4,28 @@ export const Gameboard = () => {
   // create the gameboard
   const gameboardArr = [];
   const createGameboard = () => {
-      const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-      const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
-      const squares = numbers.flatMap(num => {
-        return letters.flatMap(letter => {
-          return letter = letter + num;
-        })
-      })
-      gameboardArr.push(...squares);
+    const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
+    const squares = numbers.flatMap(num => {
+      return letters.flatMap(letter => {
+        return {
+          position: (letter = letter + num),
+          hasShip: false,
+          isShot: false,
+        };
+      });
+    });
+    gameboardArr.push(...squares);
   };
 
   // place ships at specific coordinates by calling the ship factory function
+  const placeShip = (coords, length) => {
+    const position = gameboardArr.find(obj => obj.position === coords);
+    const index = gameboardArr.indexOf(position);
+    for (let i = 0; i < length; i++) {
+      gameboardArr[index + i].hasShip = true;
+    }
+  };
 
   const receiveAttack = () => {
     // takes a pair of coordinates
@@ -25,5 +36,5 @@ export const Gameboard = () => {
 
   // keep track of missed shots
   // report whether all ships have been sunk
-  return {createGameboard, gameboardArr};
+  return { createGameboard, gameboardArr, placeShip };
 };

@@ -7,6 +7,10 @@ describe('Ship functions', () => {
     ship = Ship(2);
   });
 
+  test('Expect ship length to be 2', () => {
+    expect(ship.properties.length).toBe(2);
+  });
+
   test('Return true if hits equal length', () => {
     ship.hit();
     ship.hit();

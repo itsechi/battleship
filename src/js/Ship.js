@@ -1,10 +1,15 @@
 export const Ship = length => {
-  let hits = 0;
+  const properties = {
+    length: length,
+    hits: 0
+  }
+
   const hit = () => {
-    hits++;
+    properties.hits++;
   };
+
   const isSunk = () => {
-    return length === hits ? true : false;
+    return properties.length === properties.hits ? true : false;
   };
-  return { length, hit, isSunk };
+  return { properties, hit, isSunk };
 };
