@@ -1,8 +1,8 @@
-export const Ship = length => {
+export const Ship = (length, coords) => {
   const properties = {
     length: length,
-    hits: 0
-  }
+    hits: 0,
+  };
 
   const hit = () => {
     properties.hits++;
