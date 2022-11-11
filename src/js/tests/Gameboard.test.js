@@ -36,4 +36,10 @@ describe('Gameboard functions', () => {
     expect(gameboard.gameboardArr[0].hasShip.properties.hits).toBe(1);
     expect(gameboard.gameboardArr[0].isShot).toBeTruthy();
   });
+
+  test('`hasSunk` returns true if the length of the ship equals the number of hits', () => {
+    gameboard.placeShip('A1', 1);
+    gameboard.receiveAttack('A1');
+    expect(gameboard.gameboardArr[0].hasShip.isSunk()).toBeTruthy();
+  });
 });

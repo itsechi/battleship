@@ -1,9 +1,9 @@
 import { Ship } from './Ship';
 
 export const Gameboard = () => {
-  // create the gameboard
   const gameboardArr = [];
   const shipsArr = [];
+
   const createGameboard = () => {
     const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
     const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
@@ -33,9 +33,8 @@ export const Gameboard = () => {
     const position = gameboardArr.find(obj => obj.position === coords);
     position.hasShip && position.hasShip.hit();
     position.isShot = true;
+    position.hasShip && position.hasShip.isSunk();
   };
 
-  // keep track of missed shots
-  // report whether all ships have been sunk
   return { createGameboard, gameboardArr, placeShip, shipsArr, receiveAttack };
 };
