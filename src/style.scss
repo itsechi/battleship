@@ -6,5 +6,21 @@
 }
 
 .box {
-  outline: 1px solid red;
+  outline: 1px solid blue;
+  height: 1.5rem;
+}
+
+.ship {
+  outline: 2px solid blue;
+  height: 1.5rem;
+  cursor: move;
+  background-color: rgba(0, 0, 255, 0.164);
+  z-index: 2;
+  position: absolute;
+}
+
+.shipsContainer {
+  margin-top: 1rem;
+  display: flex;
+  gap: 1rem;
 }

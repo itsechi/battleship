@@ -1,4 +1,4 @@
-export const Ship = (length, coords) => {
+export const Ship = length => {
   const properties = {
     length: length,
     hits: 0,
