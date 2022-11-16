@@ -5,18 +5,17 @@ export const Gameboard = () => {
 
   const createGameboard = () => {
     const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-    const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
-    const squares = numbers.flatMap(num => {
-      return letters.flatMap(letter => {
+    const squares = numbers.flatMap(y => {
+      return numbers.flatMap(x => {
         return {
-          position: (letter = letter + '-' + num),
+          position: (x = y + '-' + x),
           hasShip: false,
           isShot: false,
         };
       });
     });
+
     gameboardArr.push(...squares);
-    console.log(gameboardArr);
   };
 
   const placeShip = (coords, ship) => {
@@ -24,6 +23,7 @@ export const Gameboard = () => {
     const index = gameboardArr.indexOf(position);
     for (let i = 0; i < ship.properties.length; i++) {
       gameboardArr[index + i].hasShip = ship;
+      // console.log(gameboardArr)
     }
   };
 

@@ -32,6 +32,20 @@ export const UI = () => {
   };
 
   const placeShips = player => {
+    container.addEventListener('dragleave', e => {
+      e.preventDefault();
+      if (e.target.classList.contains('box')) {
+        e.target.style.background = '';
+      }
+    });
+
+    container.addEventListener('dragenter', e => {
+      e.preventDefault();
+      if (e.target.classList.contains('box')) {
+        e.target.style.background = 'rgba(0, 0, 255, 0.7)';
+      }
+    });
+
     container.addEventListener('dragover', e => {
       e.preventDefault();
     });
@@ -41,8 +55,19 @@ export const UI = () => {
       if (e.target.parentNode.firstElementChild.classList.contains('box')) {
         const draggable = document.querySelector('.dragging');
         const ship = player.shipsArr[draggable.dataset.index];
-        player.placeShip(e.target.dataset.id, ship);
-        e.target.appendChild(draggable);
+        draggable.style.position = 'absolute';
+        e.target.style.background = '';
+
+        // check if the placement is valid
+        const shipLength = +ship.properties.length;
+        const positionX = +e.target.dataset.id.split('-')[1];
+        const width = 10;
+        if (positionX + (shipLength - 1) <= width) {
+          player.placeShip(e.target.dataset.id, ship);
+          e.target.appendChild(draggable);
+        } else {
+          draggable.style.position = '';
+        }
       }
     });
   };

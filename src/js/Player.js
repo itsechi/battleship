@@ -26,6 +26,5 @@ export const Player = () => {
     enemy.receiveAttack(coords);
   };
 
-  console.log(shipsArr);
   return { gameboardArr, randomAttack, receiveAttack, shipsArr, placeShip };
 };
