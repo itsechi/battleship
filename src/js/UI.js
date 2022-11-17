@@ -61,10 +61,26 @@ export const UI = () => {
         // check if the placement is valid
         const shipLength = +ship.properties.length;
         const positionX = +e.target.dataset.id.split('-')[1];
+        const positionY = +e.target.dataset.id.split('-')[0];
         const width = 10;
-        if (positionX + (shipLength - 1) <= width) {
+        let positions = [];
+        for (let i = 0; i < shipLength; i++) {
+          positions.push(
+            player.gameboardArr.find(
+              obj => obj.position === positionY + '-' + (positionX + i)
+            )
+          );
+        }
+
+        if (
+          positionX + (shipLength - 1) <= width &&
+          positions.every(pos => pos.isValid)
+        ) {
           player.placeShip(e.target.dataset.id, ship);
           e.target.appendChild(draggable);
+          draggable.setAttribute('draggable', false);
+          draggable.style.userSelect = 'none';
+          draggable.style.cursor = 'default';
         } else {
           draggable.style.position = '';
         }
