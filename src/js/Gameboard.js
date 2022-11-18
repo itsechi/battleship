@@ -52,7 +52,6 @@ export const Gameboard = () => {
 
   const receiveAttack = coords => {
     const position = gameboardArr.find(obj => obj.position === coords);
-    console.log(position)
     position.hasShip && position.hasShip.hit();
     position.isShot = true;
     position.hasShip && position.hasShip.isSunk();

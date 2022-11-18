@@ -92,8 +92,11 @@ export const UI = () => {
   const attack = player => {
     container.addEventListener('click', e => {
       player.receiveAttack(e.target.dataset.id);
-      
-      if (player.gameboardArr.find(obj => obj.position === e.target.dataset.id).hasShip) {
+
+      if (
+        player.gameboardArr.find(obj => obj.position === e.target.dataset.id)
+          .hasShip
+      ) {
         e.target.classList.add('shot');
       } else e.target.classList.add('missed');
     });
