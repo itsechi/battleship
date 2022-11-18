@@ -32,6 +32,7 @@ export const UI = () => {
   };
 
   const placeShips = player => {
+    // add the highlight to the target square
     container.addEventListener('dragleave', e => {
       e.preventDefault();
       if (e.target.classList.contains('box')) {
@@ -46,6 +47,7 @@ export const UI = () => {
       }
     });
 
+    // make it possible to place the ship
     container.addEventListener('dragover', e => {
       e.preventDefault();
     });
@@ -57,26 +59,7 @@ export const UI = () => {
         const ship = player.shipsArr[draggable.dataset.index];
         draggable.style.position = 'absolute';
         e.target.style.background = '';
-
-        // check if the placement is valid
-        const shipLength = +ship.properties.length;
-        const positionX = +e.target.dataset.id.split('-')[1];
-        const positionY = +e.target.dataset.id.split('-')[0];
-        const width = 10;
-        let positions = [];
-        for (let i = 0; i < shipLength; i++) {
-          positions.push(
-            player.gameboardArr.find(
-              obj => obj.position === positionY + '-' + (positionX + i)
-            )
-          );
-        }
-
-        if (
-          positionX + (shipLength - 1) <= width &&
-          positions.every(pos => pos.isValid)
-        ) {
-          player.placeShip(e.target.dataset.id, ship);
+        if (player.placeShip(e.target.dataset.id, ship)) {
           e.target.appendChild(draggable);
           draggable.setAttribute('draggable', false);
           draggable.style.userSelect = 'none';
@@ -92,7 +75,6 @@ export const UI = () => {
   const attack = player => {
     container.addEventListener('click', e => {
       player.receiveAttack(e.target.dataset.id);
-
       if (
         player.gameboardArr.find(obj => obj.position === e.target.dataset.id)
           .hasShip

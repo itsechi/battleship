@@ -1,5 +1,3 @@
-import { Ship } from './Ship';
-
 export const Gameboard = () => {
   const gameboardArr = [];
 
@@ -20,34 +18,55 @@ export const Gameboard = () => {
   };
 
   const placeShip = (coords, ship) => {
+    // find the position in the gameboard array
     const position = gameboardArr.find(obj => obj.position === coords);
+    const positionX = +position.position.split('-')[1];
+    const positionY = +position.position.split('-')[0];
     const getPosition = (y, x) => {
       return gameboardArr.find(obj => obj.position === y + '-' + x);
     };
     const index = gameboardArr.indexOf(position);
 
-    for (let i = 0; i < ship.properties.length; i++) {
-      const position = gameboardArr[index + i];
-      const positionX = +position.position.split('-')[1];
-      const positionY = +position.position.split('-')[0];
-      // place the ship
-      position.hasShip = ship;
-
-      // mark adjacent positions invalid
-      const positions = [
-        getPosition(positionY - 1, positionX),
-        getPosition(positionY + 1, positionX),
-        getPosition(positionY - 1, positionX - 1),
-        getPosition(positionY + 1, positionX + 1),
-        getPosition(positionY - 1, positionX + 1),
-        getPosition(positionY + 1, positionX - 1),
-        getPosition(positionY, positionX - 1),
-        getPosition(positionY, positionX + 1),
-      ];
-      positions.map(obj => {
-        if (obj) obj.isValid = false;
-      });
+    // check if ship positions are valid
+    const shipLength = +ship.properties.length;
+    const width = 10;
+    let shipPositions = [];
+    for (let i = 0; i < shipLength; i++) {
+      shipPositions.push(
+        gameboardArr.find(
+          obj => obj.position === positionY + '-' + (positionX + i)
+        )
+      );
     }
+
+    if (
+      positionX + (shipLength - 1) <= width &&
+      shipPositions.every(pos => pos.isValid)
+    ) {
+      for (let i = 0; i < ship.properties.length; i++) {
+        const position = gameboardArr[index + i];
+        const positionX = +position.position.split('-')[1];
+        const positionY = +position.position.split('-')[0];
+        // place the ship
+        position.hasShip = ship;
+
+        // mark adjacent positions invalid
+        const adjacentPositions = [
+          getPosition(positionY - 1, positionX),
+          getPosition(positionY + 1, positionX),
+          getPosition(positionY - 1, positionX - 1),
+          getPosition(positionY + 1, positionX + 1),
+          getPosition(positionY - 1, positionX + 1),
+          getPosition(positionY + 1, positionX - 1),
+          getPosition(positionY, positionX - 1),
+          getPosition(positionY, positionX + 1),
+        ];
+        adjacentPositions.map(obj => {
+          if (obj) obj.isValid = false;
+        });
+      }
+      return true;
+    } else return false;
   };
 
   const receiveAttack = coords => {
