@@ -7,4 +7,5 @@ export const App = () => {
   ui.renderGameboard(player.gameboardArr);
   ui.renderShips(player);
   ui.placeShips(player);
+  ui.attack(player);
 };

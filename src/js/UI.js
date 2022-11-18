@@ -81,6 +81,7 @@ export const UI = () => {
           draggable.setAttribute('draggable', false);
           draggable.style.userSelect = 'none';
           draggable.style.cursor = 'default';
+          draggable.style.zIndex = '-1';
         } else {
           draggable.style.position = '';
         }
@@ -88,5 +89,15 @@ export const UI = () => {
     });
   };
 
-  return { renderGameboard, renderShips, placeShips };
+  const attack = player => {
+    container.addEventListener('click', e => {
+      player.receiveAttack(e.target.dataset.id);
+      
+      if (player.gameboardArr.find(obj => obj.position === e.target.dataset.id).hasShip) {
+        e.target.classList.add('shot');
+      } else e.target.classList.add('missed');
+    });
+  };
+
+  return { renderGameboard, renderShips, placeShips, attack };
 };

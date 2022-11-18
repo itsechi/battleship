@@ -16,11 +16,18 @@
   height: 1.5rem;
   cursor: move;
   background-color: rgba(0, 0, 255, 0.164);
-  // position: absolute;
 }
 
 .shipsContainer {
   margin-top: 1rem;
   display: flex;
   gap: 1rem;
+}
+
+.missed {
+  background-color: rgba(255, 0, 0, 0.6);
+}
+
+.shot {
+  background-color: rgba(0, 0, 255, 0.6);
 }
