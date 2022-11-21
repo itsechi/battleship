@@ -1,5 +1,6 @@
 export const Gameboard = () => {
   const gameboardArr = [];
+  let isVertical = false;
 
   const createGameboard = () => {
     const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -17,7 +18,7 @@ export const Gameboard = () => {
     gameboardArr.push(...squares);
   };
 
-  const placeShip = (coords, ship) => {
+  const placeShip = (coords, ship, isVertical) => {
     // find the position in the gameboard array
     const position = gameboardArr.find(obj => obj.position === coords);
     const positionX = +position.position.split('-')[1];
@@ -32,24 +33,35 @@ export const Gameboard = () => {
     const width = 10;
     let shipPositions = [];
     for (let i = 0; i < shipLength; i++) {
-      shipPositions.push(
-        gameboardArr.find(
-          obj => obj.position === positionY + '-' + (positionX + i)
-        )
-      );
+      if (isVertical)
+        shipPositions.push(
+          gameboardArr.find(
+            obj => obj.position === positionY + i + '-' + positionX
+          )
+        );
+      else
+        shipPositions.push(
+          gameboardArr.find(
+            obj => obj.position === positionY + '-' + (positionX + i)
+          )
+        );
     }
-
     if (
-      positionX + (shipLength - 1) <= width &&
-      shipPositions.every(pos => pos.isValid)
+      (!isVertical &&
+        positionX + (shipLength - 1) <= width &&
+        shipPositions.every(pos => pos.isValid)) ||
+      (isVertical &&
+        positionY + (shipLength - 1) <= width &&
+        shipPositions.every(pos => pos.isValid))
     ) {
       for (let i = 0; i < ship.properties.length; i++) {
-        const position = gameboardArr[index + i];
+        const position = isVertical
+          ? gameboardArr[index + i * 10]
+          : gameboardArr[index + i];
         const positionX = +position.position.split('-')[1];
         const positionY = +position.position.split('-')[0];
         // place the ship
         position.hasShip = ship;
-
         // mark adjacent positions invalid
         const adjacentPositions = [
           getPosition(positionY - 1, positionX),
@@ -76,5 +88,11 @@ export const Gameboard = () => {
     position.hasShip && position.hasShip.isSunk();
   };
 
-  return { createGameboard, gameboardArr, placeShip, receiveAttack };
+  return {
+    createGameboard,
+    gameboardArr,
+    placeShip,
+    receiveAttack,
+    isVertical,
+  };
 };

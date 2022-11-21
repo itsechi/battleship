@@ -5,6 +5,7 @@ export const Player = () => {
   const gameboard = Gameboard();
   gameboard.createGameboard();
   const gameboardArr = gameboard.gameboardArr;
+  const isVertical = gameboard.isVertical;
   const receiveAttack = gameboard.receiveAttack;
   const placeShip = gameboard.placeShip;
   const shipsArr = [
@@ -26,5 +27,12 @@ export const Player = () => {
     enemy.receiveAttack(coords);
   };
 
-  return { gameboardArr, randomAttack, receiveAttack, shipsArr, placeShip };
+  return {
+    gameboardArr,
+    randomAttack,
+    receiveAttack,
+    shipsArr,
+    placeShip,
+    isVertical,
+  };
 };

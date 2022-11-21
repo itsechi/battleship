@@ -28,6 +28,24 @@ export const UI = () => {
       shipDiv.addEventListener('dragend', e => {
         e.target.classList.remove('dragging');
       });
+
+      shipDiv.addEventListener('click', e => {
+        if (!player.isVertical) {
+          player.isVertical = true;
+          console.log(player.isVertical);
+          e.target.style.width = '1.5rem';
+          e.target.style.height = `calc(${ship.properties.length * 1.5}rem + ${
+            ship.properties.length - 1
+          }px)`;
+        } else {
+          player.isVertical = false;
+          console.log(player.isVertical);
+          e.target.style.height = '1.5rem';
+          e.target.style.width = `calc(${ship.properties.length * 1.5}rem + ${
+            ship.properties.length - 1
+          }px)`;
+        }
+      });
     });
   };
 
@@ -59,12 +77,13 @@ export const UI = () => {
         const ship = player.shipsArr[draggable.dataset.index];
         draggable.style.position = 'absolute';
         e.target.style.background = '';
-        if (player.placeShip(e.target.dataset.id, ship)) {
+        if (player.placeShip(e.target.dataset.id, ship, player.isVertical)) {
           e.target.appendChild(draggable);
           draggable.setAttribute('draggable', false);
           draggable.style.userSelect = 'none';
           draggable.style.cursor = 'default';
           draggable.style.zIndex = '-1';
+          player.isVertical = false;
         } else {
           draggable.style.position = '';
         }
@@ -74,13 +93,16 @@ export const UI = () => {
 
   const attack = player => {
     container.addEventListener('click', e => {
-      player.receiveAttack(e.target.dataset.id);
-      if (
-        player.gameboardArr.find(obj => obj.position === e.target.dataset.id)
-          .hasShip
-      ) {
-        e.target.classList.add('shot');
-      } else e.target.classList.add('missed');
+      if (e.target.classList.contains('box')) {
+        player.receiveAttack(e.target.dataset.id);
+        console.log(e.target);
+        if (
+          player.gameboardArr.find(obj => obj.position === e.target.dataset.id)
+            .hasShip
+        ) {
+          e.target.classList.add('shot');
+        } else e.target.classList.add('missed');
+      }
     });
   };
 
