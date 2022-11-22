@@ -2,6 +2,7 @@ export const Ship = length => {
   const properties = {
     length: length,
     hits: 0,
+    isVertical: false,
   };
 
   const hit = () => {

@@ -10,43 +10,57 @@ export const UI = () => {
     });
   };
 
+  const createShip = (ship, index) => {
+    const shipDiv = document.createElement('div');
+    shipDiv.classList.add('ship');
+    shipDiv.setAttribute('draggable', true);
+    shipDiv.setAttribute('data-length', ship.properties.length);
+    shipDiv.setAttribute('data-index', index);
+    shipDiv.style.width = `calc(${ship.properties.length * 1.5}rem + ${
+      ship.properties.length - 1
+    }px)`;
+    document.getElementById('shipsContainer').appendChild(shipDiv);
+  };
+
+  const dragAndDrop = ship => {
+    ship.addEventListener('dragstart', e => {
+      e.target.classList.add('dragging');
+      console.log('idk');
+    });
+    ship.addEventListener('dragend', e => {
+      e.target.classList.remove('dragging');
+    });
+  };
+
   const renderShips = player => {
     player.shipsArr.forEach((ship, index) => {
-      const shipDiv = document.createElement('div');
-      shipDiv.classList.add('ship');
-      shipDiv.setAttribute('draggable', true);
-      shipDiv.setAttribute('data-length', ship.properties.length);
-      shipDiv.setAttribute('data-index', index);
-      shipDiv.style.width = `calc(${ship.properties.length * 1.5}rem + ${
-        ship.properties.length - 1
-      }px)`;
-      document.getElementById('shipsContainer').appendChild(shipDiv);
+      createShip(ship, index);
+    });
 
-      shipDiv.addEventListener('dragstart', e => {
-        e.target.classList.add('dragging');
-      });
-      shipDiv.addEventListener('dragend', e => {
-        e.target.classList.remove('dragging');
-      });
-
-      shipDiv.addEventListener('click', e => {
-        if (!player.isVertical) {
-          player.isVertical = true;
-          console.log(player.isVertical);
-          e.target.style.width = '1.5rem';
-          e.target.style.height = `calc(${ship.properties.length * 1.5}rem + ${
-            ship.properties.length - 1
-          }px)`;
-        } else {
-          player.isVertical = false;
-          console.log(player.isVertical);
-          e.target.style.height = '1.5rem';
-          e.target.style.width = `calc(${ship.properties.length * 1.5}rem + ${
-            ship.properties.length - 1
-          }px)`;
-        }
+    const ships = document.querySelectorAll('.ship');
+    ships.forEach(ship => {
+      dragAndDrop(ship);
+      ship.addEventListener('click', e => {
+        const ship = player.shipsArr[e.target.dataset.index];
+        rotateShips(e, ship);
       });
     });
+
+    const rotateShips = (e, ship) => {
+      if (!ship.isVertical) {
+        ship.isVertical = true;
+        e.target.style.width = '1.5rem';
+        e.target.style.height = `calc(${ship.properties.length * 1.5}rem + ${
+          ship.properties.length - 1
+        }px)`;
+      } else {
+        ship.isVertical = false;
+        e.target.style.height = '1.5rem';
+        e.target.style.width = `calc(${ship.properties.length * 1.5}rem + ${
+          ship.properties.length - 1
+        }px)`;
+      }
+    };
   };
 
   const placeShips = player => {
@@ -77,13 +91,12 @@ export const UI = () => {
         const ship = player.shipsArr[draggable.dataset.index];
         draggable.style.position = 'absolute';
         e.target.style.background = '';
-        if (player.placeShip(e.target.dataset.id, ship, player.isVertical)) {
+        if (player.placeShip(e.target.dataset.id, ship, ship.isVertical)) {
           e.target.appendChild(draggable);
           draggable.setAttribute('draggable', false);
           draggable.style.userSelect = 'none';
           draggable.style.cursor = 'default';
           draggable.style.zIndex = '-1';
-          player.isVertical = false;
         } else {
           draggable.style.position = '';
         }

@@ -1,6 +1,5 @@
 export const Gameboard = () => {
   const gameboardArr = [];
-  let isVertical = false;
 
   const createGameboard = () => {
     const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -18,7 +17,7 @@ export const Gameboard = () => {
     gameboardArr.push(...squares);
   };
 
-  const placeShip = (coords, ship, isVertical) => {
+  const placeShip = (coords, ship) => {
     // find the position in the gameboard array
     const position = gameboardArr.find(obj => obj.position === coords);
     const positionX = +position.position.split('-')[1];
@@ -37,7 +36,7 @@ export const Gameboard = () => {
         gameboardArr.find(obj => {
           return (
             obj.position ===
-            (isVertical
+            (ship.isVertical
               ? positionY + i + '-' + positionX
               : positionY + '-' + (positionX + i))
           );
@@ -45,15 +44,15 @@ export const Gameboard = () => {
       );
     }
     if (
-      (!isVertical &&
+      (!ship.isVertical &&
         positionX + (shipLength - 1) <= width &&
         shipPositions.every(pos => pos.isValid)) ||
-      (isVertical &&
+      (ship.isVertical &&
         positionY + (shipLength - 1) <= width &&
         shipPositions.every(pos => pos.isValid))
     ) {
       for (let i = 0; i < ship.properties.length; i++) {
-        const position = isVertical
+        const position = ship.isVertical
           ? gameboardArr[index + i * 10]
           : gameboardArr[index + i];
         const positionX = +position.position.split('-')[1];
@@ -92,6 +91,5 @@ export const Gameboard = () => {
     gameboardArr,
     placeShip,
     receiveAttack,
-    isVertical,
   };
 };
