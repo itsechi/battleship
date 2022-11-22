@@ -37,4 +37,11 @@ describe('Gameboard functions', () => {
     gameboard.receiveAttack('1-1');
     expect(gameboard.gameboardArr[0].hasShip.isSunk()).toBeTruthy();
   });
+
+  test('`placeShip` works vertically', () => {
+    gameboard.placeShip('1-1', Ship(3), true);
+    expect(gameboard.gameboardArr[0].hasShip).toBeTruthy();
+    expect(gameboard.gameboardArr[10].hasShip).toBeTruthy();
+    expect(gameboard.gameboardArr[20].hasShip).toBeTruthy();
+  });
 });

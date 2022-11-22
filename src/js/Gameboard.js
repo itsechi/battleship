@@ -33,18 +33,16 @@ export const Gameboard = () => {
     const width = 10;
     let shipPositions = [];
     for (let i = 0; i < shipLength; i++) {
-      if (isVertical)
-        shipPositions.push(
-          gameboardArr.find(
-            obj => obj.position === positionY + i + '-' + positionX
-          )
-        );
-      else
-        shipPositions.push(
-          gameboardArr.find(
-            obj => obj.position === positionY + '-' + (positionX + i)
-          )
-        );
+      shipPositions.push(
+        gameboardArr.find(obj => {
+          return (
+            obj.position ===
+            (isVertical
+              ? positionY + i + '-' + positionX
+              : positionY + '-' + (positionX + i))
+          );
+        })
+      );
     }
     if (
       (!isVertical &&
@@ -77,6 +75,7 @@ export const Gameboard = () => {
           if (obj) obj.isValid = false;
         });
       }
+      console.log(gameboardArr);
       return true;
     } else return false;
   };
