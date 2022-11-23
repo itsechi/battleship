@@ -14,6 +14,7 @@ export const UI = () => {
     shipDiv.setAttribute('draggable', true);
     shipDiv.setAttribute('data-length', ship.properties.length);
     shipDiv.setAttribute('data-index', index);
+    shipDiv.setAttribute('data-vertical', false);
     shipDiv.style.width = `calc(${ship.properties.length * 1.5}rem + ${
       ship.properties.length - 1
     }px)`;
@@ -29,33 +30,31 @@ export const UI = () => {
     });
   };
 
-  const _rotate = (ship, e) => {
-    if (!ship.isVertical) {
-      ship.isVertical = true;
-      e.target.style.width = '1.5rem';
-      e.target.style.height = `calc(${ship.properties.length * 1.5}rem + ${
-        ship.properties.length - 1
-      }px)`;
-    } else {
-      ship.isVertical = false;
-      e.target.style.height = '1.5rem';
-      e.target.style.width = `calc(${ship.properties.length * 1.5}rem + ${
-        ship.properties.length - 1
-      }px)`;
-    }
-  };
-
-  const _rotateShip = (ship, shipsArr) => {
+  const _rotateShip = (ship, helper) => {
     ship.addEventListener('click', e => {
-      const ship = shipsArr[e.target.dataset.index];
-      _rotate(ship, e);
+      helper(e.target.dataset.index);
+      ship.setAttribute(
+        'data-vertical',
+        ship.dataset.vertical === 'false' ? 'true' : 'false'
+      );
+      if (ship.dataset.vertical === 'true') {
+        e.target.style.width = '1.5rem';
+        e.target.style.height = `calc(${ship.dataset.length * 1.5}rem + ${
+          ship.dataset.length - 1
+        }px)`;
+      } else {
+        e.target.style.height = '1.5rem';
+        e.target.style.width = `calc(${ship.dataset.length * 1.5}rem + ${
+          ship.dataset.length - 1
+        }px)`;
+      }
     });
   };
 
-  const addShipHandlers = shipsArr => {
+  const addShipHandlers = helper => {
     const ships = document.querySelectorAll('.ship');
     ships.forEach(ship => {
-      _rotateShip(ship, shipsArr);
+      _rotateShip(ship, helper);
       _dragAndDrop(ship);
     });
   };

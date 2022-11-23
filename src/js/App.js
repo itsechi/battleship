@@ -13,7 +13,13 @@ export const App = () => {
     shipsArr.forEach((ship, index) => {
       ui.renderShip(ship, index);
     });
-    ui.addShipHandlers(shipsArr);
+
+    const rotateShips = (shipIndex) => {
+      const ship = shipsArr[shipIndex];
+      ship.properties.isVertical = !ship.properties.isVertical;
+      console.log(ship.properties.isVertical)
+    }
+    ui.addShipHandlers(rotateShips);
   };
 
   createGameboard(player.gameboardArr);
