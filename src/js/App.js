@@ -19,5 +19,5 @@ export const App = () => {
   createGameboard(player.gameboardArr);
   createShips(player.shipsArr);
   ui.placeShips(player);
-  ui.attack(player);
+  ui.renderAttack(player);
 };

@@ -29,29 +29,33 @@ export const UI = () => {
     });
   };
 
-  const _rotate = (ship, shipsArr) => {
+  const _rotate = (ship, e) => {
+    if (!ship.isVertical) {
+      ship.isVertical = true;
+      e.target.style.width = '1.5rem';
+      e.target.style.height = `calc(${ship.properties.length * 1.5}rem + ${
+        ship.properties.length - 1
+      }px)`;
+    } else {
+      ship.isVertical = false;
+      e.target.style.height = '1.5rem';
+      e.target.style.width = `calc(${ship.properties.length * 1.5}rem + ${
+        ship.properties.length - 1
+      }px)`;
+    }
+  };
+
+  const _rotateShip = (ship, shipsArr) => {
     ship.addEventListener('click', e => {
       const ship = shipsArr[e.target.dataset.index];
-      if (!ship.isVertical) {
-        ship.isVertical = true;
-        e.target.style.width = '1.5rem';
-        e.target.style.height = `calc(${ship.properties.length * 1.5}rem + ${
-          ship.properties.length - 1
-        }px)`;
-      } else {
-        ship.isVertical = false;
-        e.target.style.height = '1.5rem';
-        e.target.style.width = `calc(${ship.properties.length * 1.5}rem + ${
-          ship.properties.length - 1
-        }px)`;
-      }
+      _rotate(ship, e);
     });
   };
 
   const addShipHandlers = shipsArr => {
     const ships = document.querySelectorAll('.ship');
     ships.forEach(ship => {
-      _rotate(ship, shipsArr);
+      _rotateShip(ship, shipsArr);
       _dragAndDrop(ship);
     });
   };
@@ -77,36 +81,40 @@ export const UI = () => {
       e.preventDefault();
     });
 
+    const _placeShip = e => {
+      const draggableShip = document.querySelector('.dragging');
+      const ship = player.shipsArr[draggableShip.dataset.index];
+      draggableShip.style.position = 'absolute';
+      e.target.style.background = '';
+
+      if (player.placeShip(e.target.dataset.id, ship, ship.isVertical)) {
+        // if it was possible to place the ship
+        e.target.appendChild(draggableShip);
+        draggableShip.setAttribute('draggableShip', false);
+        draggableShip.style.userSelect = 'none';
+        draggableShip.style.cursor = 'default';
+        draggableShip.style.zIndex = '-1';
+      } else {
+        draggableShip.style.position = '';
+      }
+    };
+
     container.addEventListener('drop', e => {
       e.preventDefault();
       if (e.target.parentNode.firstElementChild.classList.contains('box')) {
-        const draggable = document.querySelector('.dragging');
-        const ship = player.shipsArr[draggable.dataset.index];
-        draggable.style.position = 'absolute';
-        e.target.style.background = '';
-        if (player.placeShip(e.target.dataset.id, ship, ship.isVertical)) {
-          e.target.appendChild(draggable);
-          draggable.setAttribute('draggable', false);
-          draggable.style.userSelect = 'none';
-          draggable.style.cursor = 'default';
-          draggable.style.zIndex = '-1';
-        } else {
-          draggable.style.position = '';
-        }
+        _placeShip(e);
       }
     });
   };
 
-  const attack = player => {
+  const renderAttack = player => {
     container.addEventListener('click', e => {
       if (e.target.classList.contains('box')) {
         player.receiveAttack(e.target.dataset.id);
-        if (
-          player.gameboardArr.find(obj => obj.position === e.target.dataset.id)
-            .hasShip
-        ) {
-          e.target.classList.add('shot');
-        } else e.target.classList.add('missed');
+        player.gameboardArr.find(obj => obj.position === e.target.dataset.id)
+          .hasShip
+          ? e.target.classList.add('shot')
+          : e.target.classList.add('missed');
       }
     });
   };
@@ -116,6 +124,6 @@ export const UI = () => {
     renderShip,
     addShipHandlers,
     placeShips,
-    attack,
+    renderAttack,
   };
 };
