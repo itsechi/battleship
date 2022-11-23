@@ -13,7 +13,6 @@ export const Gameboard = () => {
         };
       });
     });
-
     gameboardArr.push(...squares);
   };
 
@@ -22,27 +21,19 @@ export const Gameboard = () => {
     const position = gameboardArr.find(obj => obj.position === coords);
     const positionX = +position.position.split('-')[1];
     const positionY = +position.position.split('-')[0];
-    const getPosition = (y, x) => {
-      return gameboardArr.find(obj => obj.position === y + '-' + x);
-    };
-    const index = gameboardArr.indexOf(position);
 
-    // check if ship positions are valid
+    // check if it's possible to place the ship
     const shipLength = +ship.properties.length;
     const width = 10;
     let shipPositions = [];
     for (let i = 0; i < shipLength; i++) {
-      shipPositions.push(
-        gameboardArr.find(obj => {
-          return (
-            obj.position ===
-            (ship.isVertical
-              ? positionY + i + '-' + positionX
-              : positionY + '-' + (positionX + i))
-          );
-        })
-      );
+      const condition = ship.isVertical
+        ? positionY + i + '-' + positionX
+        : positionY + '-' + (positionX + i);
+      const shipSquares = gameboardArr.find(obj => obj.position === condition);
+      shipPositions.push(shipSquares);
     }
+
     if (
       (!ship.isVertical &&
         positionX + (shipLength - 1) <= width &&
@@ -51,15 +42,20 @@ export const Gameboard = () => {
         positionY + (shipLength - 1) <= width &&
         shipPositions.every(pos => pos.isValid))
     ) {
+      // if it's possible to place the ship, mark the ship squares
+      const index = gameboardArr.indexOf(position);
       for (let i = 0; i < ship.properties.length; i++) {
         const position = ship.isVertical
           ? gameboardArr[index + i * 10]
           : gameboardArr[index + i];
         const positionX = +position.position.split('-')[1];
         const positionY = +position.position.split('-')[0];
-        // place the ship
         position.hasShip = ship;
+
         // mark adjacent positions invalid
+        const getPosition = (y, x) => {
+          return gameboardArr.find(obj => obj.position === y + '-' + x);
+        };
         const adjacentPositions = [
           getPosition(positionY - 1, positionX),
           getPosition(positionY + 1, positionX),
@@ -74,7 +70,6 @@ export const Gameboard = () => {
           if (obj) obj.isValid = false;
         });
       }
-      console.log(gameboardArr);
       return true;
     } else return false;
   };

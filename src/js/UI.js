@@ -1,16 +1,14 @@
 export const UI = () => {
   const container = document.getElementById('container');
 
-  const renderGameboard = gameboardArr => {
-    gameboardArr.forEach(obj => {
-      const square = document.createElement('div');
-      square.classList.add('box');
-      square.dataset.id = obj.position;
-      container.appendChild(square);
-    });
+  const renderGameboard = obj => {
+    const square = document.createElement('div');
+    square.classList.add('box');
+    square.dataset.id = obj.position;
+    container.appendChild(square);
   };
 
-  const createShip = (ship, index) => {
+  const renderShip = (ship, index) => {
     const shipDiv = document.createElement('div');
     shipDiv.classList.add('ship');
     shipDiv.setAttribute('draggable', true);
@@ -22,45 +20,46 @@ export const UI = () => {
     document.getElementById('shipsContainer').appendChild(shipDiv);
   };
 
-  const dragAndDrop = ship => {
+  const _dragAndDrop = ship => {
     ship.addEventListener('dragstart', e => {
       e.target.classList.add('dragging');
-      console.log('idk');
     });
     ship.addEventListener('dragend', e => {
       e.target.classList.remove('dragging');
     });
   };
 
-  const renderShips = player => {
-    player.shipsArr.forEach((ship, index) => {
-      createShip(ship, index);
-    });
+  const _rotate = (e, ship) => {
+    if (!ship.isVertical) {
+      ship.isVertical = true;
+      e.target.style.width = '1.5rem';
+      e.target.style.height = `calc(${ship.properties.length * 1.5}rem + ${
+        ship.properties.length - 1
+      }px)`;
+    } else {
+      ship.isVertical = false;
+      e.target.style.height = '1.5rem';
+      e.target.style.width = `calc(${ship.properties.length * 1.5}rem + ${
+        ship.properties.length - 1
+      }px)`;
+    }
+  };
 
+  const dragAndDropShips = () => {
     const ships = document.querySelectorAll('.ship');
     ships.forEach(ship => {
-      dragAndDrop(ship);
+      _dragAndDrop(ship);
+    });
+  };
+
+  const rotateShips = shipsArr => {
+    const ships = document.querySelectorAll('.ship');
+    ships.forEach(ship => {
       ship.addEventListener('click', e => {
-        const ship = player.shipsArr[e.target.dataset.index];
-        rotateShips(e, ship);
+        const ship = shipsArr[e.target.dataset.index];
+        _rotate(e, ship);
       });
     });
-
-    const rotateShips = (e, ship) => {
-      if (!ship.isVertical) {
-        ship.isVertical = true;
-        e.target.style.width = '1.5rem';
-        e.target.style.height = `calc(${ship.properties.length * 1.5}rem + ${
-          ship.properties.length - 1
-        }px)`;
-      } else {
-        ship.isVertical = false;
-        e.target.style.height = '1.5rem';
-        e.target.style.width = `calc(${ship.properties.length * 1.5}rem + ${
-          ship.properties.length - 1
-        }px)`;
-      }
-    };
   };
 
   const placeShips = player => {
@@ -108,7 +107,6 @@ export const UI = () => {
     container.addEventListener('click', e => {
       if (e.target.classList.contains('box')) {
         player.receiveAttack(e.target.dataset.id);
-        console.log(e.target);
         if (
           player.gameboardArr.find(obj => obj.position === e.target.dataset.id)
             .hasShip
@@ -119,5 +117,12 @@ export const UI = () => {
     });
   };
 
-  return { renderGameboard, renderShips, placeShips, attack };
+  return {
+    renderGameboard,
+    renderShip,
+    dragAndDropShips,
+    rotateShips,
+    placeShips,
+    attack,
+  };
 };
