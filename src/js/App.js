@@ -13,8 +13,7 @@ export const App = () => {
     shipsArr.forEach((ship, index) => {
       ui.renderShip(ship, index);
     });
-    ui.rotateShips(shipsArr);
-    ui.dragAndDropShips();
+    ui.addShipHandlers(shipsArr);
   };
 
   createGameboard(player.gameboardArr);

@@ -29,36 +29,30 @@ export const UI = () => {
     });
   };
 
-  const _rotate = (e, ship) => {
-    if (!ship.isVertical) {
-      ship.isVertical = true;
-      e.target.style.width = '1.5rem';
-      e.target.style.height = `calc(${ship.properties.length * 1.5}rem + ${
-        ship.properties.length - 1
-      }px)`;
-    } else {
-      ship.isVertical = false;
-      e.target.style.height = '1.5rem';
-      e.target.style.width = `calc(${ship.properties.length * 1.5}rem + ${
-        ship.properties.length - 1
-      }px)`;
-    }
-  };
-
-  const dragAndDropShips = () => {
-    const ships = document.querySelectorAll('.ship');
-    ships.forEach(ship => {
-      _dragAndDrop(ship);
+  const _rotate = (ship, shipsArr) => {
+    ship.addEventListener('click', e => {
+      const ship = shipsArr[e.target.dataset.index];
+      if (!ship.isVertical) {
+        ship.isVertical = true;
+        e.target.style.width = '1.5rem';
+        e.target.style.height = `calc(${ship.properties.length * 1.5}rem + ${
+          ship.properties.length - 1
+        }px)`;
+      } else {
+        ship.isVertical = false;
+        e.target.style.height = '1.5rem';
+        e.target.style.width = `calc(${ship.properties.length * 1.5}rem + ${
+          ship.properties.length - 1
+        }px)`;
+      }
     });
   };
 
-  const rotateShips = shipsArr => {
+  const addShipHandlers = shipsArr => {
     const ships = document.querySelectorAll('.ship');
     ships.forEach(ship => {
-      ship.addEventListener('click', e => {
-        const ship = shipsArr[e.target.dataset.index];
-        _rotate(e, ship);
-      });
+      _rotate(ship, shipsArr);
+      _dragAndDrop(ship);
     });
   };
 
@@ -120,8 +114,7 @@ export const UI = () => {
   return {
     renderGameboard,
     renderShip,
-    dragAndDropShips,
-    rotateShips,
+    addShipHandlers,
     placeShips,
     attack,
   };
