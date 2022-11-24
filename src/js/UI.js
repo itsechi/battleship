@@ -30,9 +30,10 @@ export const UI = () => {
     });
   };
 
-  const _rotateShip = (ship, helper) => {
+  const _rotate = (ship, helper) => {
     ship.addEventListener('click', e => {
-      helper(e.target.dataset.index);
+      const shipIndex = e.target.dataset.index;
+      helper(shipIndex);
       ship.setAttribute(
         'data-vertical',
         ship.dataset.vertical === 'false' ? 'true' : 'false'
@@ -54,7 +55,7 @@ export const UI = () => {
   const addShipHandlers = helper => {
     const ships = document.querySelectorAll('.ship');
     ships.forEach(ship => {
-      _rotateShip(ship, helper);
+      _rotate(ship, helper);
       _dragAndDrop(ship);
     });
   };
@@ -86,7 +87,9 @@ export const UI = () => {
       draggableShip.style.position = 'absolute';
       e.target.style.background = '';
 
-      if (player.placeShip(e.target.dataset.id, ship, ship.isVertical)) {
+      if (
+        player.placeShip(e.target.dataset.id, ship, ship.properties.isVertical)
+      ) {
         // if it was possible to place the ship
         e.target.appendChild(draggableShip);
         draggableShip.setAttribute('draggableShip', false);

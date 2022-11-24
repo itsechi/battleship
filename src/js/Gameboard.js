@@ -27,7 +27,7 @@ export const Gameboard = () => {
     const width = 10;
     let shipPositions = [];
     for (let i = 0; i < shipLength; i++) {
-      const condition = ship.isVertical
+      const condition = ship.properties.isVertical
         ? positionY + i + '-' + positionX
         : positionY + '-' + (positionX + i);
       const shipSquares = gameboardArr.find(obj => obj.position === condition);
@@ -35,17 +35,17 @@ export const Gameboard = () => {
     }
 
     if (
-      (!ship.isVertical &&
+      (!ship.properties.isVertical &&
         positionX + (shipLength - 1) <= width &&
         shipPositions.every(pos => pos.isValid)) ||
-      (ship.isVertical &&
+      (ship.properties.isVertical &&
         positionY + (shipLength - 1) <= width &&
         shipPositions.every(pos => pos.isValid))
     ) {
       // if it's possible to place the ship, mark the ship squares
       const index = gameboardArr.indexOf(position);
       for (let i = 0; i < ship.properties.length; i++) {
-        const position = ship.isVertical
+        const position = ship.properties.isVertical
           ? gameboardArr[index + i * 10]
           : gameboardArr[index + i];
         const positionX = +position.position.split('-')[1];

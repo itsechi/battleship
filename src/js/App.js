@@ -14,11 +14,12 @@ export const App = () => {
       ui.renderShip(ship, index);
     });
 
+    // add event handlers
     const rotateShips = (shipIndex) => {
       const ship = shipsArr[shipIndex];
       ship.properties.isVertical = !ship.properties.isVertical;
-      console.log(ship.properties.isVertical)
     }
+
     ui.addShipHandlers(rotateShips);
   };
 
