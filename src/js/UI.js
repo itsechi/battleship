@@ -60,7 +60,7 @@ export const UI = () => {
     });
   };
 
-  const placeShips = player => {
+  const addContainerHandlers = helper => {
     // add the highlight to the target square
     container.addEventListener('dragleave', e => {
       e.preventDefault();
@@ -81,32 +81,29 @@ export const UI = () => {
       e.preventDefault();
     });
 
-    const _placeShip = e => {
-      const draggableShip = document.querySelector('.dragging');
-      const ship = player.shipsArr[draggableShip.dataset.index];
-      draggableShip.style.position = 'absolute';
-      e.target.style.background = '';
-
-      if (
-        player.placeShip(e.target.dataset.id, ship, ship.properties.isVertical)
-      ) {
-        // if it was possible to place the ship
-        e.target.appendChild(draggableShip);
-        draggableShip.setAttribute('draggableShip', false);
-        draggableShip.style.userSelect = 'none';
-        draggableShip.style.cursor = 'default';
-        draggableShip.style.zIndex = '-1';
-      } else {
-        draggableShip.style.position = '';
-      }
-    };
-
     container.addEventListener('drop', e => {
       e.preventDefault();
-      if (e.target.parentNode.firstElementChild.classList.contains('box')) {
-        _placeShip(e);
+      const target = e.target;
+      if (target.parentNode.firstElementChild.classList.contains('box')) {
+        const draggableShip = document.querySelector('.dragging');
+        const shipIndex = draggableShip.dataset.index;
+        const coords = e.target.dataset.id;
+        target.style.background = '';
+        helper(shipIndex, coords, draggableShip, target);
       }
     });
+  };
+
+  const renderShipPlacement = (draggableShip, target) => {
+    target.appendChild(draggableShip);
+    draggableShip.setAttribute('draggableShip', false);
+    draggableShip.style.userSelect = 'none';
+    draggableShip.style.cursor = 'default';
+    draggableShip.style.zIndex = '-1';
+  };
+
+  const renderUnsuccessfulPlacement = draggableShip => {
+    draggableShip.style.position = '';
   };
 
   const renderAttack = player => {
@@ -125,7 +122,9 @@ export const UI = () => {
     renderGameboard,
     renderShip,
     addShipHandlers,
-    placeShips,
+    addContainerHandlers,
     renderAttack,
+    renderShipPlacement,
+    renderUnsuccessfulPlacement,
   };
 };

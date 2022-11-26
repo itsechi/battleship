@@ -13,18 +13,27 @@ export const App = () => {
     shipsArr.forEach((ship, index) => {
       ui.renderShip(ship, index);
     });
+  };
 
-    // add event handlers
-    const rotateShips = (shipIndex) => {
+  const shipEvents = shipsArr => {
+    const rotateShips = shipIndex => {
       const ship = shipsArr[shipIndex];
       ship.properties.isVertical = !ship.properties.isVertical;
-    }
+    };
+
+    const placeShip = (shipIndex, coords, draggableShip, target) => {
+      const ship = shipsArr[shipIndex];
+      if (player.placeShip(coords, ship, ship.properties.isVertical))
+        ui.renderShipPlacement(draggableShip, target);
+      else ui.renderUnsuccessfulPlacement(draggableShip);
+    };
 
     ui.addShipHandlers(rotateShips);
+    ui.addContainerHandlers(placeShip);
   };
 
   createGameboard(player.gameboardArr);
   createShips(player.shipsArr);
-  ui.placeShips(player);
+  shipEvents(player.shipsArr);
   ui.renderAttack(player);
 };
