@@ -32,6 +32,7 @@ export const UI = () => {
 
   const _rotate = (ship, helper) => {
     ship.addEventListener('click', e => {
+      if (ship.draggable === false) return;
       const shipIndex = e.target.dataset.index;
       helper(shipIndex);
       ship.setAttribute(
@@ -95,11 +96,11 @@ export const UI = () => {
   };
 
   const renderSuccessfulPlacement = (draggableShip, target) => {
-    target.appendChild(draggableShip);
-    draggableShip.setAttribute('draggableShip', false);
+    draggableShip.setAttribute('draggable', false);
     draggableShip.style.userSelect = 'none';
     draggableShip.style.cursor = 'default';
     draggableShip.style.zIndex = '-1';
+    target.appendChild(draggableShip);
   };
 
   const renderUnsuccessfulPlacement = draggableShip => {
