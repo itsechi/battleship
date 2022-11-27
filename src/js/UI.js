@@ -94,7 +94,7 @@ export const UI = () => {
     });
   };
 
-  const renderShipPlacement = (draggableShip, target) => {
+  const renderSuccessfulPlacement = (draggableShip, target) => {
     target.appendChild(draggableShip);
     draggableShip.setAttribute('draggableShip', false);
     draggableShip.style.userSelect = 'none';
@@ -106,16 +106,22 @@ export const UI = () => {
     draggableShip.style.position = '';
   };
 
-  const renderAttack = player => {
+  const renderAttack = helper => {
     container.addEventListener('click', e => {
-      if (e.target.classList.contains('box')) {
-        player.receiveAttack(e.target.dataset.id);
-        player.gameboardArr.find(obj => obj.position === e.target.dataset.id)
-          .hasShip
-          ? e.target.classList.add('shot')
-          : e.target.classList.add('missed');
+      const target = e.target;
+      if (target.classList.contains('box')) {
+        const coords = e.target.dataset.id;
+        helper(coords, target);
       }
     });
+  };
+
+  const renderSuccesfulAttack = target => {
+    target.classList.add('shot');
+  };
+
+  const renderUnsuccesfulAttack = target => {
+    target.classList.add('missed');
   };
 
   return {
@@ -124,7 +130,9 @@ export const UI = () => {
     addShipHandlers,
     addContainerHandlers,
     renderAttack,
-    renderShipPlacement,
+    renderSuccesfulAttack,
+    renderUnsuccesfulAttack,
+    renderSuccessfulPlacement,
     renderUnsuccessfulPlacement,
   };
 };

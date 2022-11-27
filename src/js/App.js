@@ -15,7 +15,7 @@ export const App = () => {
     });
   };
 
-  const shipEvents = shipsArr => {
+  const shipEvents = (shipsArr, gameboardArr) => {
     const rotateShips = shipIndex => {
       const ship = shipsArr[shipIndex];
       ship.properties.isVertical = !ship.properties.isVertical;
@@ -24,16 +24,21 @@ export const App = () => {
     const placeShip = (shipIndex, coords, draggableShip, target) => {
       const ship = shipsArr[shipIndex];
       if (player.placeShip(coords, ship, ship.properties.isVertical))
-        ui.renderShipPlacement(draggableShip, target);
+        ui.renderSuccessfulPlacement(draggableShip, target);
       else ui.renderUnsuccessfulPlacement(draggableShip);
+    };
+
+    const attackShip = (coords, target) => {
+      const position = gameboardArr.find(obj => obj.position === coords);
+      position.hasShip ? ui.renderSuccesfulAttack(target) : ui.renderUnsuccesfulAttack(target);
     };
 
     ui.addShipHandlers(rotateShips);
     ui.addContainerHandlers(placeShip);
+    ui.renderAttack(attackShip)
   };
 
   createGameboard(player.gameboardArr);
   createShips(player.shipsArr);
-  shipEvents(player.shipsArr);
-  ui.renderAttack(player);
+  shipEvents(player.shipsArr, player.gameboardArr);
 };
