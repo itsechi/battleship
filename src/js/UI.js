@@ -85,18 +85,19 @@ export const UI = () => {
     container.addEventListener('drop', e => {
       e.preventDefault();
       const target = e.target;
-      if (target.parentNode.firstElementChild.classList.contains('box')) {
-        const draggableShip = document.querySelector('.dragging');
-        const shipIndex = draggableShip.dataset.index;
-        const coords = e.target.dataset.id;
-        target.style.background = '';
-        helper(shipIndex, coords, draggableShip, target);
-      }
+      if (!target.parentNode.firstElementChild.classList.contains('box'))
+        return;
+      const draggableShip = document.querySelector('.dragging');
+      const shipIndex = draggableShip.dataset.index;
+      const coords = e.target.dataset.id;
+      target.style.background = '';
+      helper(shipIndex, coords, draggableShip, target);
     });
   };
 
   const renderSuccessfulPlacement = (draggableShip, target) => {
     draggableShip.setAttribute('draggable', false);
+    draggableShip.style.position = 'absolute';
     draggableShip.style.userSelect = 'none';
     draggableShip.style.cursor = 'default';
     draggableShip.style.zIndex = '-1';
@@ -110,10 +111,10 @@ export const UI = () => {
   const renderAttack = helper => {
     container.addEventListener('click', e => {
       const target = e.target;
-      if (target.classList.contains('box')) {
-        const coords = e.target.dataset.id;
-        helper(coords, target);
-      }
+      console.log(target);
+      if (!target.classList.contains('box')) return;
+      const coords = e.target.dataset.id;
+      helper(coords, target);
     });
   };
 
