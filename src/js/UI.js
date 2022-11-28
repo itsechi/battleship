@@ -1,11 +1,14 @@
 export const UI = () => {
-  const container = document.getElementById('container');
+  const playerContainer = document.getElementById('playerContainer');
+  const computerContainer = document.getElementById('computerContainer');
 
-  const renderGameboard = obj => {
+
+  const renderGameboard = (obj, user) => {
     const square = document.createElement('div');
     square.classList.add('box');
     square.dataset.id = obj.position;
-    container.appendChild(square);
+    if (user === 'player') playerContainer.appendChild(square);
+    if (user === 'computer') computerContainer.appendChild(square);
   };
 
   const renderShip = (ship, index) => {
@@ -63,14 +66,14 @@ export const UI = () => {
 
   const addContainerHandlers = helper => {
     // add the highlight to the target square
-    container.addEventListener('dragleave', e => {
+    playerContainer.addEventListener('dragleave', e => {
       e.preventDefault();
       if (e.target.classList.contains('box')) {
         e.target.style.background = '';
       }
     });
 
-    container.addEventListener('dragenter', e => {
+    playerContainer.addEventListener('dragenter', e => {
       e.preventDefault();
       if (e.target.classList.contains('box')) {
         e.target.style.background = 'rgba(0, 0, 255, 0.7)';
@@ -78,11 +81,11 @@ export const UI = () => {
     });
 
     // make it possible to place the ship
-    container.addEventListener('dragover', e => {
+    playerContainer.addEventListener('dragover', e => {
       e.preventDefault();
     });
 
-    container.addEventListener('drop', e => {
+    playerContainer.addEventListener('drop', e => {
       e.preventDefault();
       const target = e.target;
       if (!target.parentNode.firstElementChild.classList.contains('box'))
@@ -109,9 +112,8 @@ export const UI = () => {
   };
 
   const renderAttack = helper => {
-    container.addEventListener('click', e => {
+    computerContainer.addEventListener('click', e => {
       const target = e.target;
-      console.log(target);
       if (!target.classList.contains('box')) return;
       const coords = e.target.dataset.id;
       helper(coords, target);

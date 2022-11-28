@@ -26,11 +26,25 @@ export const Player = () => {
     enemy.receiveAttack(coords);
   };
 
+  const randomPlacement = () => {
+    shipsArr.forEach(ship => {
+      const findValidSquare = () => {
+        let index = Math.floor(Math.random() * 100);
+        let coords = gameboardArr[index].position;
+        let options = [true, false];
+        let isVertical = options[Math.floor(Math.random() * 2)];
+        placeShip(coords, ship, (ship.properties.isVertical = isVertical)) ? placeShip(coords, ship, (ship.properties.isVertical = isVertical)) : findValidSquare();
+      };
+      findValidSquare();
+    });
+  };
+
   return {
     gameboardArr,
     randomAttack,
     receiveAttack,
     shipsArr,
     placeShip,
+    randomPlacement,
   };
 };
