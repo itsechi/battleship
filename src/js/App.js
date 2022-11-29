@@ -5,7 +5,7 @@ export const App = () => {
   const player = Player();
   const ui = UI();
   const computer = Player();
-  let gameStart = false;
+  // let gameStart = false;
 
   const createGameboard = (gameboardArr, user) => {
     gameboardArr.forEach(obj => ui.renderGameboard(obj, user));
@@ -35,7 +35,7 @@ export const App = () => {
   };
 
   const attackShip = gameboardArr => {
-    if (!gameStart) return;
+    // if (!gameStart) return;
     const attack = (coords, target) => {
       const position = gameboardArr.find(obj => obj.position === coords);
       position.hasShip
@@ -52,4 +52,5 @@ export const App = () => {
   attackShip(computer.gameboardArr);
 
   computer.randomPlacement();
+  ui.forTesting(computer.gameboardArr)
 };

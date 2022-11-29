@@ -27,12 +27,13 @@ export const Player = () => {
   };
 
   const randomPlacement = () => {
-    shipsArr.forEach(ship => {
+    shipsArr.forEach((ship, i) => {
       const findValidSquare = () => {
         let index = Math.floor(Math.random() * 100);
         let coords = gameboardArr[index].position;
         let options = [true, false];
         let isVertical = options[Math.floor(Math.random() * 2)];
+        console.log(ship, i, coords)        // console.log(placeShip(coords, ship, (ship.properties.isVertical = isVertical)))
         placeShip(coords, ship, (ship.properties.isVertical = isVertical)) ? placeShip(coords, ship, (ship.properties.isVertical = isVertical)) : findValidSquare();
       };
       findValidSquare();

@@ -128,6 +128,13 @@ export const UI = () => {
     target.classList.add('missed');
   };
 
+  const forTesting = (gameboardArr) => {
+    const squares = document.querySelectorAll('.box');
+    squares.forEach(square => {
+      gameboardArr.find(obj => obj.position === square.dataset.id).hasShip ? square.classList.add('shot') : square.classList.add('missed')
+    })
+  }
+
   return {
     renderGameboard,
     renderShip,
@@ -138,5 +145,6 @@ export const UI = () => {
     renderUnsuccesfulAttack,
     renderSuccessfulPlacement,
     renderUnsuccessfulPlacement,
+    forTesting
   };
 };

@@ -19,6 +19,7 @@ export const Gameboard = () => {
   const placeShip = (coords, ship) => {
     // find the position in the gameboard array
     const position = gameboardArr.find(obj => obj.position === coords);
+    if (position.hasShip) return;
     const positionX = +position.position.split('-')[1];
     const positionY = +position.position.split('-')[0];
 
