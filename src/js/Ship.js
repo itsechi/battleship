@@ -3,6 +3,8 @@ export const Ship = length => {
     length: length,
     hits: 0,
     isVertical: false,
+    isPlaced: false,
+    adjacentPositions: [],
   };
 
   const hit = () => {

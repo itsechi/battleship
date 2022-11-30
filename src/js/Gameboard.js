@@ -52,6 +52,7 @@ export const Gameboard = () => {
         const positionX = +position.position.split('-')[1];
         const positionY = +position.position.split('-')[0];
         position.hasShip = ship;
+        ship.properties.isPlaced = true;
 
         // mark adjacent positions invalid
         const getPosition = (y, x) => {
@@ -67,6 +68,7 @@ export const Gameboard = () => {
           getPosition(positionY, positionX - 1),
           getPosition(positionY, positionX + 1),
         ];
+        ship.properties.adjacentPositions.push(adjacentPositions);
         adjacentPositions.map(obj => {
           if (obj) obj.isValid = false;
         });

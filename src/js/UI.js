@@ -2,10 +2,10 @@ export const UI = () => {
   const playerContainer = document.getElementById('playerContainer');
   const computerContainer = document.getElementById('computerContainer');
 
-
   const renderGameboard = (obj, user) => {
     const square = document.createElement('div');
     square.classList.add('box');
+    square.classList.add(`box-${user}`);
     square.dataset.id = obj.position;
     if (user === 'player') playerContainer.appendChild(square);
     if (user === 'computer') computerContainer.appendChild(square);
@@ -128,12 +128,21 @@ export const UI = () => {
     target.classList.add('missed');
   };
 
-  const forTesting = (gameboardArr) => {
+  const forTesting = gameboardArr => {
     const squares = document.querySelectorAll('.box');
     squares.forEach(square => {
-      gameboardArr.find(obj => obj.position === square.dataset.id).hasShip ? square.classList.add('shot') : square.classList.add('missed')
-    })
-  }
+      gameboardArr.find(obj => obj.position === square.dataset.id).hasShip
+        ? square.classList.add('shot')
+        : square.classList.add('missed');
+    });
+  };
+
+  const markAdjacentSquares = position => {
+    const square = document.querySelector(
+      `.box-computer[data-id='${position}']`
+    );
+    square.classList.add('missed');
+  };
 
   return {
     renderGameboard,
@@ -145,6 +154,7 @@ export const UI = () => {
     renderUnsuccesfulAttack,
     renderSuccessfulPlacement,
     renderUnsuccessfulPlacement,
-    forTesting
+    markAdjacentSquares,
+    forTesting,
   };
 };
