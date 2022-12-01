@@ -20,14 +20,14 @@ export const Player = () => {
     Ship(1),
   ];
 
-  const randomAttack = enemy => {
+  const getCoords = () => {
     const index = Math.floor(Math.random() * 100);
     const coords = gameboardArr[index].position;
-    enemy.receiveAttack(coords);
+    return coords;
   };
 
   const randomPlacement = () => {
-    shipsArr.forEach((ship, i) => {
+    shipsArr.forEach(ship => {
       const findValidSquare = () => {
         let index = Math.floor(Math.random() * 100);
         let coords = gameboardArr[index].position;
@@ -43,7 +43,7 @@ export const Player = () => {
 
   return {
     gameboardArr,
-    randomAttack,
+    getCoords,
     receiveAttack,
     shipsArr,
     placeShip,

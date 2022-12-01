@@ -137,9 +137,9 @@ export const UI = () => {
     });
   };
 
-  const markAdjacentSquares = position => {
+  const markAdjacentSquares = (user, position) => {
     const square = document.querySelector(
-      `.box-computer[data-id='${position}']`
+      `.box-${user}[data-id='${position}']`
     );
     square.classList.add('missed');
   };

@@ -38,32 +38,51 @@ export const App = () => {
   const startGame = shipsArr => {
     if (shipsArr.every(ship => ship.properties.isPlaced)) {
       gameStart = true;
-      attackShip(computer);
+      attackShip();
     }
   };
 
-  const attackShip = user => {
+  const attackShip = () => {
     if (!gameStart) return;
     const attack = (coords, target) => {
-      const position = user.gameboardArr.find(obj => obj.position === coords);
+      const position = computer.gameboardArr.find(
+        obj => obj.position === coords
+      );
       position.hasShip
         ? ui.renderSuccesfulAttack(target)
         : ui.renderUnsuccesfulAttack(target);
       if (position.isShot) return;
-      user.receiveAttack(position.position);
+      computer.receiveAttack(position.position);
       if (position.hasShip && position.hasShip.isSunk())
-        markSunk(user, position);
+        markSunk(computer, 'computer', position);
+
+      computerAttack();
     };
     ui.renderAttack(attack);
   };
 
-  const markSunk = (user, position) => {
+  const computerAttack = () => {
+    const findValidSquare = () => {
+      const coords = player.getCoords();
+      const position = player.gameboardArr.find(obj => obj.position === coords);
+      !position.isShot ? player.receiveAttack(coords) : findValidSquare();
+      const target = document.querySelector(`.box-player[data-id='${coords}']`);
+      position.hasShip
+        ? ui.renderSuccesfulAttack(target)
+        : ui.renderUnsuccesfulAttack(target);
+      if (position.hasShip && position.hasShip.isSunk())
+        markSunk(player, 'player', position);
+    };
+    findValidSquare();
+  };
+
+  const markSunk = (user, userStr, position) => {
     const adjacentPositions =
       position.hasShip.properties.adjacentPositions.flat();
     adjacentPositions.forEach(position => {
       if (!position) return;
       user.receiveAttack(position.position);
-      ui.markAdjacentSquares(position.position);
+      ui.markAdjacentSquares(userStr, position.position);
     });
   };
 
@@ -72,5 +91,4 @@ export const App = () => {
   createShips(player.shipsArr);
   shipEvents(player.shipsArr, player.gameboardArr);
   computer.randomPlacement();
-  // ui.forTesting(computer.gameboardArr);
 };
