@@ -66,10 +66,9 @@ export const App = () => {
       const coords = player.getCoords();
       const position = player.gameboardArr.find(obj => obj.position === coords);
       !position.isShot ? player.receiveAttack(coords) : findValidSquare();
-      const target = document.querySelector(`.box-player[data-id='${coords}']`);
       position.hasShip
-        ? ui.renderSuccesfulAttack(target)
-        : ui.renderUnsuccesfulAttack(target);
+        ? ui.renderSuccesfulAttack(coords)
+        : ui.renderUnsuccesfulAttack(coords);
       if (position.hasShip && position.hasShip.isSunk())
         markSunk(player, 'player', position);
     };

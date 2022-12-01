@@ -121,10 +121,14 @@ export const UI = () => {
   };
 
   const renderSuccesfulAttack = target => {
+    if (typeof target === 'string')
+      target = document.querySelector(`.box-player[data-id='${target}']`);
     target.classList.add('shot');
   };
 
   const renderUnsuccesfulAttack = target => {
+    if (typeof target === 'string')
+      target = document.querySelector(`.box-player[data-id='${target}']`);
     target.classList.add('missed');
   };
 
