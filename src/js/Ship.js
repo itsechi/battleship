@@ -12,7 +12,7 @@ export const Ship = length => {
   };
 
   const isSunk = () => {
-    return properties.length === properties.hits ? true : false;
+    return properties.length <= properties.hits ? true : false;
   };
   
   return { properties, hit, isSunk };

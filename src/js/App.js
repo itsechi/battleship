@@ -43,8 +43,8 @@ export const App = () => {
   };
 
   const attackShip = () => {
-    if (!gameStart) return;
     const attack = (coords, target) => {
+      if (!gameStart) return;
       const position = computer.gameboardArr.find(
         obj => obj.position === coords
       );
@@ -56,7 +56,8 @@ export const App = () => {
       if (position.hasShip && position.hasShip.isSunk())
         markSunk(computer, 'computer', position);
 
-      computerAttack();
+        finishGame();
+        computerAttack();
     };
     ui.renderAttack(attack);
   };
@@ -83,6 +84,18 @@ export const App = () => {
       user.receiveAttack(position.position);
       ui.markAdjacentSquares(userStr, position.position);
     });
+  };
+
+  const finishGame = () => {
+    if (
+      computer.shipsArr.every(ship => ship.isSunk()) ||
+      player.shipsArr.every(ship => ship.isSunk())
+    ) {
+      gameStart = false;
+      const message = document.createElement('h3');
+      message.textContent = `${computer.shipsArr.every(ship => ship.isSunk()) ? 'Player' : 'Computer'} has won!`
+      document.getElementById('shipsContainer').appendChild(message);
+    }
   };
 
   createGameboard(player.gameboardArr, 'player');
