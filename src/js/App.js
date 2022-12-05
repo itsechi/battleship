@@ -44,8 +44,10 @@ export const App = () => {
   const startGame = () => {
     gameStart = true;
     attackShip();
-    ui.startGame();
-    // location.reload();
+    const playAgain = () => {
+      location.reload();
+    }
+    ui.startGame(playAgain);
   };
 
   const attackShip = () => {

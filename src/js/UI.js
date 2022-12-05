@@ -167,11 +167,12 @@ export const UI = () => {
     btn.addEventListener('click', helper);
   }
 
-  const startGame = () => {
+  const startGame = (helper) => {
     const computerGameboard = document.getElementById('computerGameboard');
     computerGameboard.classList.remove('hidden');
     const btn = document.getElementById('btn');
-    btn.textContent = 'Play again'
+    btn.textContent = 'Play again';
+    btn.addEventListener('click', helper);
   }
 
   return {
