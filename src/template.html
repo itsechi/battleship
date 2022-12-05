@@ -18,13 +18,15 @@
   <button id="btn" class="btn btn--inactive">Start game</button>
   <main>
     <div class="game">
-      <div class="gameboardContainer">
+      <div class="gameboardContainer" id="playerGameboard">
         <h2>Player</h2>
         <section class="gameboard" id="playerContainer"></section>
+        <div id="playerShips" class="shipsContainer shipsContainer--small"></div>
       </div>
       <div class="gameboardContainer hidden" id="computerGameboard">
         <h2>Computer</h2>
         <section class="gameboard" id="computerContainer"></section>
+        <div id="computerShips" class="shipsContainer shipsContainer--small"></div>
       </div>
     </div>
     <section class="shipsContainer" id="shipsContainer"></section>

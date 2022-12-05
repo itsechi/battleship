@@ -1,6 +1,7 @@
-export const Ship = length => {
+export const Ship = (length, id) => {
   const properties = {
     length: length,
+    id: id,
     hits: 0,
     isVertical: false,
     isPlaced: false,

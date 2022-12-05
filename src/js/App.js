@@ -18,6 +18,12 @@ export const App = () => {
     ui.setMessage(`Place the ships to start the game`);
   };
 
+  const createSmallShips = (shipsArr, user) => {
+    shipsArr.forEach((ship, index) => {
+      ui.renderSmallShip(ship, index, user);
+    });
+  };
+
   const shipEvents = shipsArr => {
     const rotateShips = shipIndex => {
       const ship = shipsArr[shipIndex];
@@ -46,9 +52,11 @@ export const App = () => {
     gameStart = true;
     attackShip();
     ui.setMessage(`Sink all of the enemy's ships to win the game`);
+    createSmallShips(player.shipsArr, 'player');
+    createSmallShips(computer.shipsArr, 'computer');
     const playAgain = () => {
       location.reload();
-    }
+    };
     ui.startGame(playAgain);
   };
 
@@ -63,8 +71,10 @@ export const App = () => {
         : ui.renderUnsuccesfulAttack(target);
       if (position.isShot) return;
       computer.receiveAttack(position.position);
-      if (position.hasShip && position.hasShip.isSunk())
+      if (position.hasShip && position.hasShip.isSunk()) {
         markSunk(computer, 'computer', position);
+        ui.markSmallShip(position.hasShip.properties.id, 'computer');
+      }
 
       finishGame();
       computerAttack();
@@ -80,8 +90,10 @@ export const App = () => {
       position.hasShip
         ? ui.renderSuccesfulAttack(coords)
         : ui.renderUnsuccesfulAttack(coords);
-      if (position.hasShip && position.hasShip.isSunk())
+      if (position.hasShip && position.hasShip.isSunk()) {
         markSunk(player, 'player', position);
+        ui.markSmallShip(position.hasShip.properties.id, 'player');
+      }
     };
     findValidSquare();
   };
@@ -114,5 +126,4 @@ export const App = () => {
   createShips(player.shipsArr);
   shipEvents(player.shipsArr, player.gameboardArr);
   computer.randomPlacement();
-  // ui.forTesting(computer.gameboardArr)
 };

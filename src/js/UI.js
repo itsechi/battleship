@@ -24,6 +24,21 @@ export const UI = () => {
     document.getElementById('shipsContainer').appendChild(shipDiv);
   };
 
+  const renderSmallShip = (ship, index, user) => {
+    const shipDiv = document.createElement('div');
+    shipDiv.classList.add('ship--small');
+    shipDiv.classList.add(`ship--${user}`);
+    shipDiv.setAttribute('draggable', true);
+    shipDiv.setAttribute('data-length', ship.properties.length);
+    shipDiv.setAttribute('data-index', index);
+    shipDiv.setAttribute('data-vertical', false);
+    shipDiv.style.width = `calc(${ship.properties.length * 1}rem + ${
+      ship.properties.length - 1
+    }px)`;
+    console.log(user + 'Gameboard');
+    document.getElementById(`${user}Ships`).appendChild(shipDiv);
+  };
+
   const _dragAndDrop = ship => {
     ship.addEventListener('dragstart', e => {
       e.target.classList.add('dragging');
@@ -134,15 +149,6 @@ export const UI = () => {
     removeMissedClass();
   };
 
-  const forTesting = gameboardArr => {
-    const squares = document.querySelectorAll('.box');
-    squares.forEach(square => {
-      gameboardArr.find(obj => obj.position === square.dataset.id).hasShip
-        ? square.classList.add('shot')
-        : square.classList.add('missed');
-    });
-  };
-
   const markAdjacentSquares = (user, position) => {
     const square = document.querySelector(
       `.box-${user}[data-id='${position}']`
@@ -181,6 +187,13 @@ export const UI = () => {
     message.textContent = text;
   };
 
+  const markSmallShip = (id, user) => {
+    const ship = document.querySelector(`.ship--${user}[data-index='${id}']`);
+    ship.style.backgroundColor = '#ffc8bf';
+    ship.style.outline = '1px solid #FE7965';
+    ship.style.border = '1px solid #FE7965';
+  };
+
   return {
     renderGameboard,
     renderShip,
@@ -195,6 +208,7 @@ export const UI = () => {
     activateBtn,
     startGame,
     setMessage,
-    forTesting,
+    renderSmallShip,
+    markSmallShip,
   };
 };

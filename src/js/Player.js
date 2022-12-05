@@ -8,16 +8,16 @@ export const Player = () => {
   const receiveAttack = gameboard.receiveAttack;
   const placeShip = gameboard.placeShip;
   const shipsArr = [
-    Ship(4),
-    Ship(3),
-    Ship(3),
-    Ship(2),
-    Ship(2),
-    Ship(2),
-    Ship(1),
-    Ship(1),
-    Ship(1),
-    Ship(1),
+    Ship(4, 0),
+    Ship(3, 1),
+    Ship(3, 2),
+    Ship(2, 3),
+    Ship(2, 4),
+    Ship(2, 5),
+    Ship(1, 6),
+    Ship(1, 7),
+    Ship(1, 8),
+    Ship(1, 9),
   ];
 
   const getCoords = () => {
