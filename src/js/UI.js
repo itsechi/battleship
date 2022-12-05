@@ -43,13 +43,13 @@ export const UI = () => {
         ship.dataset.vertical === 'false' ? 'true' : 'false'
       );
       if (ship.dataset.vertical === 'true') {
-        e.target.style.width = '1.5rem';
-        e.target.style.height = `calc(${ship.dataset.length * 1.5}rem + ${
+        e.target.style.width = '2rem';
+        e.target.style.height = `calc(${ship.dataset.length * 2}rem + ${
           ship.dataset.length - 1
         }px)`;
       } else {
-        e.target.style.height = '1.5rem';
-        e.target.style.width = `calc(${ship.dataset.length * 1.5}rem + ${
+        e.target.style.height = '2rem';
+        e.target.style.width = `calc(${ship.dataset.length * 2}rem + ${
           ship.dataset.length - 1
         }px)`;
       }
@@ -161,6 +161,19 @@ export const UI = () => {
     });
   };
 
+  const activateBtn = (helper) => {
+    const btn = document.getElementById('btn');
+    if (btn.classList.contains('btn--inactive')) btn.classList.remove('btn--inactive');
+    btn.addEventListener('click', helper);
+  }
+
+  const startGame = () => {
+    const computerGameboard = document.getElementById('computerGameboard');
+    computerGameboard.classList.remove('hidden');
+    const btn = document.getElementById('btn');
+    btn.textContent = 'Play again'
+  }
+
   return {
     renderGameboard,
     renderShip,
@@ -172,6 +185,8 @@ export const UI = () => {
     renderSuccessfulPlacement,
     renderUnsuccessfulPlacement,
     markAdjacentSquares,
+    activateBtn,
+    startGame,
     forTesting,
   };
 };

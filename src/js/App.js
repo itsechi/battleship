@@ -2,9 +2,9 @@ import { UI } from './UI';
 import { Player } from './Player';
 
 export const App = () => {
-  const player = Player();
-  const ui = UI();
-  const computer = Player();
+  let player = Player();
+  let ui = UI();
+  let computer = Player();
   let gameStart = false;
 
   const createGameboard = (gameboardArr, user) => {
@@ -27,7 +27,7 @@ export const App = () => {
       const ship = shipsArr[shipIndex];
       if (player.placeShip(coords, ship, ship.properties.isVertical)) {
         ui.renderSuccessfulPlacement(draggableShip, target);
-        startGame(player.shipsArr);
+        checkStart(player.shipsArr);
       } else ui.renderUnsuccessfulPlacement(draggableShip);
     };
 
@@ -35,11 +35,17 @@ export const App = () => {
     ui.addContainerHandlers(placeShip);
   };
 
-  const startGame = shipsArr => {
+  const checkStart = shipsArr => {
     if (shipsArr.every(ship => ship.properties.isPlaced)) {
-      gameStart = true;
-      attackShip();
+      ui.activateBtn(startGame);
     }
+  };
+
+  const startGame = () => {
+    gameStart = true;
+    attackShip();
+    ui.startGame();
+    // location.reload();
   };
 
   const attackShip = () => {
@@ -56,8 +62,8 @@ export const App = () => {
       if (position.hasShip && position.hasShip.isSunk())
         markSunk(computer, 'computer', position);
 
-        finishGame();
-        computerAttack();
+      finishGame();
+      computerAttack();
     };
     ui.renderAttack(attack);
   };
@@ -93,7 +99,9 @@ export const App = () => {
     ) {
       gameStart = false;
       const message = document.getElementById('message');
-      message.textContent = `${computer.shipsArr.every(ship => ship.isSunk()) ? 'Player' : 'Computer'} has won!`
+      message.textContent = `${
+        computer.shipsArr.every(ship => ship.isSunk()) ? 'Player' : 'Computer'
+      } has won!`;
     }
   };
 

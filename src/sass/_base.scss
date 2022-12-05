@@ -33,7 +33,7 @@ h3 {
 .game {
   padding: 2rem;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
 }
 
 .gameboardContainer {
@@ -101,7 +101,7 @@ h3 {
     position: absolute;
     left: 50%;
     top: 50%;
-    transform: translate(-50%, -50%) rotate(45deg) ;
+    transform: translate(-50%, -50%) rotate(45deg);
     border-radius: 20%;
     width: 0.20rem;
     height: 1rem;
@@ -113,10 +113,34 @@ h3 {
     position: absolute;
     left: 50%;
     top: 50%;
-    transform: translate(-50%, -50%) rotate(-45deg) ;
+    transform: translate(-50%, -50%) rotate(-45deg);
     border-radius: 20%;
     width: 0.20rem;
     height: 1rem;
     background-color: #FE7965;
   }
+}
+
+.btn {
+  margin-top: 2rem;
+  background: #20BDC6;
+  border-radius: 1rem;
+  padding: 0.5rem 1rem;
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 23px;
+  border: none;
+  outline: none;
+  color: #FFFFFF;
+  cursor: pointer;
+  font-family: inherit;
+
+  &--inactive {
+    cursor: default;
+    background: #AEAEAE;
+  }
+}
+
+.hidden {
+  display: none;
 }
