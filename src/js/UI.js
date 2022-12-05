@@ -76,7 +76,7 @@ export const UI = () => {
     playerContainer.addEventListener('dragenter', e => {
       e.preventDefault();
       if (e.target.classList.contains('box')) {
-        e.target.style.background = 'rgba(0, 0, 255, 0.7)';
+        e.target.style.background = '#20BDC6';
       }
     });
 
@@ -161,19 +161,25 @@ export const UI = () => {
     });
   };
 
-  const activateBtn = (helper) => {
+  const activateBtn = helper => {
     const btn = document.getElementById('btn');
-    if (btn.classList.contains('btn--inactive')) btn.classList.remove('btn--inactive');
+    if (btn.classList.contains('btn--inactive'))
+      btn.classList.remove('btn--inactive');
     btn.addEventListener('click', helper);
-  }
+  };
 
-  const startGame = (helper) => {
+  const startGame = helper => {
     const computerGameboard = document.getElementById('computerGameboard');
     computerGameboard.classList.remove('hidden');
     const btn = document.getElementById('btn');
     btn.textContent = 'Play again';
     btn.addEventListener('click', helper);
-  }
+  };
+
+  const setMessage = text => {
+    const message = document.getElementById('message');
+    message.textContent = text;
+  };
 
   return {
     renderGameboard,
@@ -188,6 +194,7 @@ export const UI = () => {
     markAdjacentSquares,
     activateBtn,
     startGame,
+    setMessage,
     forTesting,
   };
 };

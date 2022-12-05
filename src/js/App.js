@@ -15,6 +15,7 @@ export const App = () => {
     shipsArr.forEach((ship, index) => {
       ui.renderShip(ship, index);
     });
+    ui.setMessage(`Place the ships to start the game`);
   };
 
   const shipEvents = shipsArr => {
@@ -44,6 +45,7 @@ export const App = () => {
   const startGame = () => {
     gameStart = true;
     attackShip();
+    ui.setMessage(`Sink all of the enemy's ships to win the game`);
     const playAgain = () => {
       location.reload();
     }
@@ -100,10 +102,10 @@ export const App = () => {
       player.shipsArr.every(ship => ship.isSunk())
     ) {
       gameStart = false;
-      const message = document.getElementById('message');
-      message.textContent = `${
+      const text = `${
         computer.shipsArr.every(ship => ship.isSunk()) ? 'Player' : 'Computer'
       } has won!`;
+      ui.setMessage(text);
     }
   };
 
