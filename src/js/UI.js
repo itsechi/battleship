@@ -18,7 +18,7 @@ export const UI = () => {
     shipDiv.setAttribute('data-length', ship.properties.length);
     shipDiv.setAttribute('data-index', index);
     shipDiv.setAttribute('data-vertical', false);
-    shipDiv.style.width = `calc(${ship.properties.length * 1.5}rem + ${
+    shipDiv.style.width = `calc(${ship.properties.length * 2}rem + ${
       ship.properties.length - 1
     }px)`;
     document.getElementById('shipsContainer').appendChild(shipDiv);
@@ -124,12 +124,14 @@ export const UI = () => {
     if (typeof target === 'string')
       target = document.querySelector(`.box-player[data-id='${target}']`);
     target.classList.add('shot');
+    removeMissedClass();
   };
 
   const renderUnsuccesfulAttack = target => {
     if (typeof target === 'string')
       target = document.querySelector(`.box-player[data-id='${target}']`);
     target.classList.add('missed');
+    removeMissedClass();
   };
 
   const forTesting = gameboardArr => {
@@ -146,6 +148,17 @@ export const UI = () => {
       `.box-${user}[data-id='${position}']`
     );
     square.classList.add('missed');
+  };
+
+  const removeMissedClass = () => {
+    const squares = document.querySelectorAll('.box');
+    squares.forEach(square => {
+      if (
+        square.classList.contains('shot') &&
+        square.classList.contains('missed')
+      )
+        square.classList.remove('missed');
+    });
   };
 
   return {

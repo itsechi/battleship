@@ -5,13 +5,29 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@400;700&display=swap"
+    rel="stylesheet">
   <title>Battleship</title>
 </head>
 
 <body>
-<div class="container" id="playerContainer"></div>
-<div class="container" id="computerContainer"></div>
-<div class="shipsContainer" id="shipsContainer"></div>
+  <h1>Battleship</h1>
+  <h3 id="message">Place the ships to start the game</h3>
+  <main>
+    <div class="game">
+      <div class="gameboardContainer">
+        <h2>Player</h2>
+        <section class="gameboard" id="playerContainer"></section>
+      </div>
+      <div class="gameboardContainer">
+        <h2>Computer</h2>
+        <section class="gameboard" id="computerContainer"></section>
+      </div>
+    </div>
+    <section class="shipsContainer" id="shipsContainer"></section>
+  </main>
 </body>
 
 </html>

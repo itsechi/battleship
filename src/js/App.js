@@ -92,9 +92,8 @@ export const App = () => {
       player.shipsArr.every(ship => ship.isSunk())
     ) {
       gameStart = false;
-      const message = document.createElement('h3');
+      const message = document.getElementById('message');
       message.textContent = `${computer.shipsArr.every(ship => ship.isSunk()) ? 'Player' : 'Computer'} has won!`
-      document.getElementById('shipsContainer').appendChild(message);
     }
   };
 
@@ -103,4 +102,5 @@ export const App = () => {
   createShips(player.shipsArr);
   shipEvents(player.shipsArr, player.gameboardArr);
   computer.randomPlacement();
+  // ui.forTesting(computer.gameboardArr)
 };
