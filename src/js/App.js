@@ -77,7 +77,7 @@ export const App = () => {
       }
 
       finishGame();
-      computerAttack();
+      if (!position.hasShip) computerAttack();
     };
     ui.renderAttack(attack);
   };
@@ -94,6 +94,7 @@ export const App = () => {
         markSunk(player, 'player', position);
         ui.markSmallShip(position.hasShip.properties.id, 'player');
       }
+      if (position.hasShip) findValidSquare();
     };
     findValidSquare();
   };
