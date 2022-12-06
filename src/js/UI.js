@@ -177,6 +177,7 @@ export const UI = () => {
   const startGame = helper => {
     const computerGameboard = document.getElementById('computerGameboard');
     computerGameboard.classList.remove('hidden');
+    computerGameboard.classList.add('animation');
     const btn = document.getElementById('btn');
     btn.textContent = 'Play again';
     btn.addEventListener('click', helper);

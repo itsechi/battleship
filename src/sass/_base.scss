@@ -158,3 +158,19 @@ h3 {
 .hidden {
   display: none;
 }
+
+.animation {
+  animation: move .5s;
+}
+
+@keyframes move {
+  0% {
+    margin-left: -50%;
+    opacity: 0;
+  }
+
+  100% {
+    margin-left: 0;
+    opacity: 1;
+  }
+}
