@@ -138,14 +138,12 @@ export const UI = () => {
     if (typeof target === 'string')
       target = document.querySelector(`.box-player[data-id='${target}']`);
     target.classList.add('shot');
-    removeMissedClass();
   };
 
   const renderUnsuccesfulAttack = target => {
     if (typeof target === 'string')
       target = document.querySelector(`.box-player[data-id='${target}']`);
     target.classList.add('missed');
-    removeMissedClass();
   };
 
   const markAdjacentSquares = (user, position) => {
@@ -210,5 +208,6 @@ export const UI = () => {
     setMessage,
     renderSmallShip,
     markSmallShip,
+    removeMissedClass,
   };
 };

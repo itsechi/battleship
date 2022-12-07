@@ -99,6 +99,8 @@ export const App = () => {
         markSunk(player, 'player', position);
         ui.markSmallShip(position.hasShip.properties.id, 'player');
       }
+      ui.removeMissedClass();
+      finishGame();
       if (position.hasShip) findValidSquare();
     };
     findValidSquare();
