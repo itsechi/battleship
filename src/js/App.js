@@ -84,6 +84,7 @@ export const App = () => {
 
   const computerAttack = () => {
     const findValidSquare = () => {
+      if (!gameStart) return;
       const availablePositions = [];
       player.gameboardArr.map(
         obj => !obj.isShot && availablePositions.push(obj)
@@ -91,7 +92,6 @@ export const App = () => {
       const coords = player.getCoords(availablePositions);
       const position = availablePositions.find(obj => obj.position === coords);
       position ? player.receiveAttack(coords) : findValidSquare();
-      console.log(position, coords);
       position.hasShip
         ? ui.renderSuccesfulAttack(coords)
         : ui.renderUnsuccesfulAttack(coords);
