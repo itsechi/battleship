@@ -83,15 +83,8 @@ export const App = () => {
   };
 
   const computerAttack = () => {
-    const findValidSquare = () => {
-      if (!gameStart) return;
-      const availablePositions = [];
-      player.gameboardArr.map(
-        obj => !obj.isShot && availablePositions.push(obj)
-      );
-      const coords = player.getCoords(availablePositions);
-      const position = availablePositions.find(obj => obj.position === coords);
-      position ? player.receiveAttack(coords) : findValidSquare();
+    const attack = (position, coords) => {
+      player.receiveAttack(coords);
       position.hasShip
         ? ui.renderSuccesfulAttack(coords)
         : ui.renderUnsuccesfulAttack(coords);
@@ -102,6 +95,17 @@ export const App = () => {
       ui.removeMissedClass();
       finishGame();
       if (position.hasShip) findValidSquare();
+    };
+
+    const findValidSquare = () => {
+      if (!gameStart) return;
+      const availablePositions = [];
+      player.gameboardArr.map(
+        obj => !obj.isShot && availablePositions.push(obj)
+      );
+      const coords = player.getCoords(availablePositions);
+      const position = availablePositions.find(obj => obj.position === coords);
+      position ? attack(position, coords) : findValidSquare();
     };
     findValidSquare();
   };
