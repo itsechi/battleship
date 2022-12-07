@@ -35,7 +35,6 @@ export const UI = () => {
     shipDiv.style.width = `calc(${ship.properties.length * 1}rem + ${
       ship.properties.length - 1
     }px)`;
-    console.log(user + 'Gameboard');
     document.getElementById(`${user}Ships`).appendChild(shipDiv);
   };
 

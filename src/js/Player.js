@@ -20,9 +20,9 @@ export const Player = () => {
     Ship(1, 9),
   ];
 
-  const getCoords = () => {
-    const index = Math.floor(Math.random() * 100);
-    const coords = gameboardArr[index].position;
+  const getCoords = arr => {
+    const index = Math.floor(Math.random() * arr.length);
+    const coords = arr[index].position;
     return coords;
   };
 
