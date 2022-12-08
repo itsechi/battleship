@@ -1,3 +1,5 @@
+$breakpoint-large: 55.625em;
+
 * {
   margin: 0;
   padding: 0;
@@ -5,7 +7,7 @@
 }
 
 body {
-  margin-top: 5vh;
+  padding: 5vh;
   font-family: 'Montserrat Alternates', sans-serif;
   display: flex;
   flex-direction: column;
@@ -14,8 +16,8 @@ body {
 
 h1 {
   font-size: 2.5rem;
-  color: #0B5A5F;
-  margin-bottom: 0.5rem;
+  color: #174A4B;
+  margin-bottom: 1rem;
 }
 
 h2 {
@@ -25,15 +27,21 @@ h2 {
 }
 
 h3 {
-  font-weight: 400;
+  font-weight: 500;
   font-size: 1rem;
-  color: #1F666A;
+  color: #174A4B;
+  letter-spacing: -0.01em;
+  font-style: italic;
+  text-align: center;
 }
 
 .game {
-  padding: 2rem;
   display: flex;
   justify-content: center;
+
+  @media (max-width: $breakpoint-large) {
+    flex-direction: column;
+  }
 }
 
 .gameboardContainer {
@@ -42,6 +50,11 @@ h3 {
   align-items: center;
   justify-content: center;
   margin: 3rem;
+
+  @media (max-width: $breakpoint-large) {
+    margin: 0;
+    margin-top: 3rem;
+  }
 }
 
 .gameboard {
@@ -74,12 +87,19 @@ h3 {
 }
 
 .shipsContainer {
-  margin-top: 1rem;
   display: flex;
   gap: 1rem;
 
   &--small {
+    margin-top: 1.5rem;
     max-width: 20rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
+
+  @media (max-width: $breakpoint-large) {
+    max-width: 30rem;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
@@ -136,10 +156,10 @@ h3 {
 }
 
 .btn {
-  margin-top: 2rem;
+  margin-top: 1rem;
   background: #20BDC6;
   border-radius: 1rem;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 1.5rem;
   font-weight: 700;
   font-size: 1rem;
   line-height: 23px;
@@ -149,9 +169,20 @@ h3 {
   cursor: pointer;
   font-family: inherit;
 
+  &:hover {
+    background-color: #12a4ac;
+    position: relative;
+    top: -2px;
+  }
+
   &--inactive {
     cursor: default;
     background: #AEAEAE;
+
+    &:hover {
+      background: #AEAEAE;
+      top: 0;
+    }
   }
 }
 
