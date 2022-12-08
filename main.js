@@ -21,7 +21,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "* {\n  margin: 0;\n  padding: 0;\n  box-sizing: border-box; }\n\nbody {\n  padding: 5vh;\n  font-family: 'Montserrat Alternates', sans-serif;\n  display: flex;\n  flex-direction: column;\n  align-items: center; }\n\nh1 {\n  font-size: 2.5rem;\n  color: #174A4B;\n  margin-bottom: 1rem; }\n\nh2 {\n  font-weight: 700;\n  font-size: 1.5rem;\n  color: #174A4B; }\n\nh3 {\n  font-weight: 500;\n  font-size: 1rem;\n  color: #174A4B;\n  letter-spacing: -0.01em;\n  font-style: italic;\n  text-align: center; }\n\n.game {\n  display: flex;\n  justify-content: center; }\n  @media (max-width: 55.625em) {\n    .game {\n      flex-direction: column; } }\n\n.gameboardContainer {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n  margin: 3rem; }\n  @media (max-width: 55.625em) {\n    .gameboardContainer {\n      margin: 0;\n      margin-top: 3rem; } }\n\n.gameboard {\n  display: grid;\n  grid-template-columns: repeat(10, 2rem);\n  grid-template-rows: repeat(10, 2rem);\n  gap: 1px;\n  user-select: none;\n  margin-top: 1rem; }\n\n.box {\n  outline: 1px solid rgba(32, 189, 198, 0.3);\n  height: 2rem; }\n\n.ship {\n  outline: 1px solid #20BDC6;\n  border: 1px solid #20BDC6;\n  height: 2rem;\n  cursor: move;\n  background: rgba(32, 189, 198, 0.5); }\n\n.ship--small {\n  outline: 1px solid #20BDC6;\n  border: 1px solid #20BDC6;\n  height: 1rem;\n  background: rgba(32, 189, 198, 0.5); }\n\n.shipsContainer {\n  display: flex;\n  gap: 1rem; }\n  .shipsContainer--small {\n    margin-top: 1.5rem;\n    max-width: 20rem;\n    flex-wrap: wrap;\n    justify-content: center;\n    align-items: center; }\n  @media (max-width: 55.625em) {\n    .shipsContainer {\n      max-width: 30rem;\n      flex-wrap: wrap;\n      justify-content: center;\n      align-items: center; } }\n\n.missed {\n  background-color: rgba(32, 189, 198, 0.2);\n  outline: 1px solid #20BDC6;\n  position: relative;\n  z-index: -1; }\n  .missed:before {\n    content: '';\n    position: absolute;\n    left: 50%;\n    top: 50%;\n    transform: translate(-50%, -50%);\n    border-radius: 50%;\n    width: 0.25rem;\n    height: 0.25rem;\n    background-color: #20BDC6; }\n\n.shot {\n  background-color: #ffc8bf;\n  outline: 1px solid #FE7965;\n  position: relative; }\n  .shot:before {\n    content: '';\n    position: absolute;\n    left: 50%;\n    top: 50%;\n    transform: translate(-50%, -50%) rotate(45deg);\n    border-radius: 20%;\n    width: 0.20rem;\n    height: 1rem;\n    background-color: #FE7965; }\n  .shot:after {\n    content: '';\n    position: absolute;\n    left: 50%;\n    top: 50%;\n    transform: translate(-50%, -50%) rotate(-45deg);\n    border-radius: 20%;\n    width: 0.20rem;\n    height: 1rem;\n    background-color: #FE7965; }\n\n.btn {\n  margin-top: 1rem;\n  background: #20BDC6;\n  border-radius: 1rem;\n  padding: 0.5rem 1.5rem;\n  font-weight: 700;\n  font-size: 1rem;\n  line-height: 23px;\n  border: none;\n  outline: none;\n  color: #FFFFFF;\n  cursor: pointer;\n  font-family: inherit; }\n  .btn:hover {\n    background-color: #12a4ac;\n    position: relative;\n    top: -2px; }\n  .btn--inactive {\n    cursor: default;\n    background: #AEAEAE; }\n    .btn--inactive:hover {\n      background: #AEAEAE;\n      top: 0; }\n\n.hidden {\n  display: none; }\n\n.animation {\n  animation: move .5s; }\n\n@keyframes move {\n  0% {\n    margin-left: -50%;\n    opacity: 0; }\n  100% {\n    margin-left: 0;\n    opacity: 1; } }\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "* {\n  margin: 0;\n  padding: 0;\n  box-sizing: border-box; }\n\nbody {\n  padding: 5vh;\n  font-family: 'Montserrat Alternates', sans-serif;\n  display: flex;\n  flex-direction: column;\n  align-items: center; }\n\nh1 {\n  font-size: 2.5rem;\n  color: #174A4B;\n  margin-bottom: 1rem; }\n\nh2 {\n  font-weight: 700;\n  font-size: 1.5rem;\n  color: #174A4B; }\n\nh3 {\n  font-weight: 500;\n  font-size: 1rem;\n  color: #174A4B;\n  letter-spacing: -0.01em;\n  font-style: italic;\n  text-align: center; }\n\n.game {\n  display: flex;\n  justify-content: center; }\n  @media (max-width: 55.625em) {\n    .game {\n      flex-direction: column; } }\n\n.gameboardContainer {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n  margin: 3rem; }\n  @media (max-width: 55.625em) {\n    .gameboardContainer {\n      margin: 0;\n      margin-top: 3rem; } }\n\n.gameboard {\n  display: grid;\n  grid-template-columns: repeat(10, 2rem);\n  grid-template-rows: repeat(10, 2rem);\n  gap: 1px;\n  user-select: none;\n  margin-top: 1rem; }\n\n.box {\n  outline: 1px solid rgba(32, 189, 198, 0.3);\n  height: 2rem; }\n\n.ship {\n  outline: 1px solid #20BDC6;\n  border: 1px solid #20BDC6;\n  height: 2rem;\n  cursor: move;\n  background: rgba(32, 189, 198, 0.5); }\n\n.ship--small {\n  outline: 1px solid #20BDC6;\n  border: 1px solid #20BDC6;\n  height: 1rem;\n  background: rgba(32, 189, 198, 0.5); }\n\n.shipsContainer {\n  display: flex;\n  gap: 1rem; }\n  .shipsContainer--small {\n    margin-top: 1.5rem;\n    max-width: 20rem;\n    flex-wrap: wrap;\n    justify-content: center;\n    align-items: center; }\n  @media (max-width: 55.625em) {\n    .shipsContainer {\n      max-width: 30rem;\n      flex-wrap: wrap;\n      justify-content: center;\n      align-items: center; } }\n\n.missed {\n  background-color: rgba(32, 189, 198, 0.2);\n  outline: 1px solid #20BDC6;\n  position: relative;\n  z-index: -1; }\n  .missed:before {\n    content: '';\n    position: absolute;\n    left: 50%;\n    top: 50%;\n    transform: translate(-50%, -50%);\n    border-radius: 50%;\n    width: 0.25rem;\n    height: 0.25rem;\n    background-color: #20BDC6; }\n\n.shot {\n  background-color: #ffc8bf;\n  outline: 1px solid #FE7965;\n  position: relative; }\n  .shot:before {\n    content: '';\n    position: absolute;\n    left: 50%;\n    top: 50%;\n    transform: translate(-50%, -50%) rotate(45deg);\n    border-radius: 20%;\n    width: 0.20rem;\n    height: 1rem;\n    background-color: #FE7965; }\n  .shot:after {\n    content: '';\n    position: absolute;\n    left: 50%;\n    top: 50%;\n    transform: translate(-50%, -50%) rotate(-45deg);\n    border-radius: 20%;\n    width: 0.20rem;\n    height: 1rem;\n    background-color: #FE7965; }\n\n.btn {\n  margin-top: 1rem;\n  background: #20BDC6;\n  border-radius: 1rem;\n  padding: 0.5rem 1.5rem;\n  font-weight: 700;\n  font-size: 1rem;\n  line-height: 23px;\n  border: none;\n  outline: none;\n  color: #FFFFFF;\n  cursor: pointer;\n  font-family: inherit; }\n  .btn:hover {\n    background-color: #12a4ac;\n    position: relative;\n    top: -2px; }\n  .btn--inactive {\n    cursor: default;\n    background: #AEAEAE; }\n    .btn--inactive:hover {\n      background: #AEAEAE;\n      top: 0; }\n\n.hidden {\n  display: none; }\n\n.inactive {\n  opacity: 0.5; }\n\n.animation {\n  animation: move .5s; }\n\n@keyframes move {\n  0% {\n    margin-left: -50%;\n    opacity: 0; }\n  100% {\n    margin-left: 0;\n    opacity: 1; } }\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -579,6 +579,7 @@ const App = () => {
   const startGame = () => {
     gameStart = true;
     playerTurn = true;
+    ui.setInactivePlayer('computer', 'player');
     attackShip();
     ui.setMessage(`Sink all of the enemy's ships to win the game`);
     createSmallShips(player.shipsArr, 'player');
@@ -609,6 +610,7 @@ const App = () => {
       finishGame();
       if (!position.hasShip) {
         playerTurn = false;
+        ui.setInactivePlayer('player', 'computer');
         computerAttack();
       }
     };
@@ -628,7 +630,10 @@ const App = () => {
       ui.removeMissedClass();
       finishGame();
       if (position.hasShip) findValidSquare();
-      else playerTurn = true;
+      else {
+        playerTurn = true;
+        ui.setInactivePlayer('computer', 'player');
+      }
     };
 
     const wait = delay => new Promise(resolve => setTimeout(resolve, delay));
@@ -1099,6 +1104,11 @@ const UI = () => {
     ship.style.border = '1px solid #FE7965';
   };
 
+  const setInactivePlayer = (active, inactive) => {
+    document.getElementById(`${active}Container`).classList.remove('inactive');
+    document.getElementById(`${inactive}Container`).classList.add('inactive');
+  };
+
   return {
     renderGameboard,
     renderShip,
@@ -1116,6 +1126,7 @@ const UI = () => {
     renderSmallShip,
     markSmallShip,
     removeMissedClass,
+    setInactivePlayer,
   };
 };
 
