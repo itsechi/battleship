@@ -190,6 +190,10 @@ h3 {
   display: none;
 }
 
+.inactive {
+  opacity: 0.5;
+}
+
 .animation {
   animation: move .5s;
 }

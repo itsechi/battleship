@@ -52,6 +52,7 @@ export const App = () => {
   const startGame = () => {
     gameStart = true;
     playerTurn = true;
+    ui.setInactivePlayer('computer', 'player');
     attackShip();
     ui.setMessage(`Sink all of the enemy's ships to win the game`);
     createSmallShips(player.shipsArr, 'player');
@@ -82,6 +83,7 @@ export const App = () => {
       finishGame();
       if (!position.hasShip) {
         playerTurn = false;
+        ui.setInactivePlayer('player', 'computer');
         computerAttack();
       }
     };
@@ -101,7 +103,10 @@ export const App = () => {
       ui.removeMissedClass();
       finishGame();
       if (position.hasShip) findValidSquare();
-      else playerTurn = true;
+      else {
+        playerTurn = true;
+        ui.setInactivePlayer('computer', 'player');
+      }
     };
 
     const wait = delay => new Promise(resolve => setTimeout(resolve, delay));

@@ -192,6 +192,11 @@ export const UI = () => {
     ship.style.border = '1px solid #FE7965';
   };
 
+  const setInactivePlayer = (active, inactive) => {
+    document.getElementById(`${active}Container`).classList.remove('inactive');
+    document.getElementById(`${inactive}Container`).classList.add('inactive');
+  };
+
   return {
     renderGameboard,
     renderShip,
@@ -209,5 +214,6 @@ export const UI = () => {
     renderSmallShip,
     markSmallShip,
     removeMissedClass,
+    setInactivePlayer,
   };
 };
