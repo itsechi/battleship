@@ -533,6 +533,7 @@ const App = () => {
   let ui = (0,_UI__WEBPACK_IMPORTED_MODULE_0__.UI)();
   let computer = (0,_Player__WEBPACK_IMPORTED_MODULE_1__.Player)();
   let gameStart = false;
+  let playerTurn = false;
 
   const createGameboard = (gameboardArr, user) => {
     gameboardArr.forEach(obj => ui.renderGameboard(obj, user));
@@ -577,6 +578,7 @@ const App = () => {
 
   const startGame = () => {
     gameStart = true;
+    playerTurn = true;
     attackShip();
     ui.setMessage(`Sink all of the enemy's ships to win the game`);
     createSmallShips(player.shipsArr, 'player');
@@ -590,6 +592,7 @@ const App = () => {
   const attackShip = () => {
     const attack = (coords, target) => {
       if (!gameStart) return;
+      if (!playerTurn) return;
       const position = computer.gameboardArr.find(
         obj => obj.position === coords
       );
@@ -604,7 +607,10 @@ const App = () => {
       }
 
       finishGame();
-      if (!position.hasShip) computerAttack();
+      if (!position.hasShip) {
+        playerTurn = false;
+        computerAttack();
+      }
     };
     ui.renderAttack(attack);
   };
@@ -622,17 +628,27 @@ const App = () => {
       ui.removeMissedClass();
       finishGame();
       if (position.hasShip) findValidSquare();
+      else playerTurn = true;
     };
 
-    const findValidSquare = () => {
-      if (!gameStart) return;
-      const availablePositions = [];
-      player.gameboardArr.map(
-        obj => !obj.isShot && availablePositions.push(obj)
-      );
-      const coords = player.getCoords(availablePositions);
-      const position = availablePositions.find(obj => obj.position === coords);
-      position ? attack(position, coords) : findValidSquare();
+    const wait = delay => new Promise(resolve => setTimeout(resolve, delay));
+
+    const findValidSquare = async () => {
+      try {
+        await wait(500);
+        if (!gameStart) return;
+        const availablePositions = [];
+        player.gameboardArr.map(
+          obj => !obj.isShot && availablePositions.push(obj)
+        );
+        const coords = player.getCoords(availablePositions);
+        const position = availablePositions.find(
+          obj => obj.position === coords
+        );
+        position ? attack(position, coords) : findValidSquare();
+      } catch (err) {
+        console.error(err);
+      }
     };
     findValidSquare();
   };
