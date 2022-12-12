@@ -7,6 +7,9 @@ export const Player = () => {
   const gameboardArr = gameboard.gameboardArr;
   const receiveAttack = gameboard.receiveAttack;
   const placeShip = gameboard.placeShip;
+  const getCoords = gameboard.getCoords;
+  const randomPlacement = gameboard.randomPlacement;
+  const findValidSquare = gameboard.findValidSquare;
   const shipsArr = [
     Ship(4, 0),
     Ship(3, 1),
@@ -20,27 +23,6 @@ export const Player = () => {
     Ship(1, 9),
   ];
 
-  const getCoords = arr => {
-    const index = Math.floor(Math.random() * arr.length);
-    const coords = arr[index].position;
-    return coords;
-  };
-
-  const randomPlacement = () => {
-    shipsArr.forEach(ship => {
-      const findValidSquare = () => {
-        let index = Math.floor(Math.random() * 100);
-        let coords = gameboardArr[index].position;
-        let options = [true, false];
-        let isVertical = options[Math.floor(Math.random() * 2)];
-        placeShip(coords, ship, (ship.properties.isVertical = isVertical))
-          ? placeShip(coords, ship, (ship.properties.isVertical = isVertical))
-          : findValidSquare();
-      };
-      findValidSquare();
-    });
-  };
-
   return {
     gameboardArr,
     getCoords,
@@ -48,5 +30,6 @@ export const Player = () => {
     shipsArr,
     placeShip,
     randomPlacement,
+    findValidSquare,
   };
 };

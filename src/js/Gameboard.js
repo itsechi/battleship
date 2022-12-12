@@ -84,10 +84,50 @@ export const Gameboard = () => {
     position.hasShip && position.hasShip.isSunk();
   };
 
+  const getCoords = arr => {
+    const index = Math.floor(Math.random() * arr.length);
+    const coords = arr[index].position;
+    return coords;
+  };
+
+  const randomPlacement = arr => {
+    arr.forEach(ship => {
+      const findValidSquare = () => {
+        let index = Math.floor(Math.random() * 100);
+        let coords = gameboardArr[index].position;
+        let options = [true, false];
+        let isVertical = options[Math.floor(Math.random() * 2)];
+        placeShip(coords, ship, (ship.properties.isVertical = isVertical))
+          ? placeShip(coords, ship, (ship.properties.isVertical = isVertical))
+          : findValidSquare();
+      };
+      findValidSquare();
+    });
+  };
+
+  const findValidSquare = async (gameStart, helper) => {
+    const wait = delay => new Promise(resolve => setTimeout(resolve, delay));
+    try {
+      await wait(500);
+      if (!gameStart) return;
+      const availablePositions = [];
+      gameboardArr.map(obj => !obj.isShot && availablePositions.push(obj));
+      const coords = getCoords(availablePositions);
+      const position = availablePositions.find(obj => obj.position === coords);
+      console.log(position);
+      position ? helper(position, coords) : findValidSquare(gameStart, helper);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return {
     createGameboard,
     gameboardArr,
     placeShip,
     receiveAttack,
+    getCoords,
+    randomPlacement,
+    findValidSquare,
   };
 };

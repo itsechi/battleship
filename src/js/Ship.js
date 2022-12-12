@@ -15,6 +15,6 @@ export const Ship = (length, id) => {
   const isSunk = () => {
     return properties.length <= properties.hits ? true : false;
   };
-  
+
   return { properties, hit, isSunk };
 };

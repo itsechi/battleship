@@ -52,9 +52,10 @@ export const App = () => {
   const startGame = () => {
     gameStart = true;
     playerTurn = true;
+    computer.randomPlacement(computer.shipsArr);
     ui.setInactivePlayer('computer', 'player');
-    attackShip();
     ui.setMessage(`Sink all of the enemy's ships to win the game`);
+    attackShip();
     createSmallShips(player.shipsArr, 'player');
     createSmallShips(computer.shipsArr, 'computer');
     const playAgain = () => {
@@ -102,33 +103,14 @@ export const App = () => {
       }
       ui.removeMissedClass();
       finishGame();
-      if (position.hasShip) findValidSquare();
+      if (position.hasShip) player.findValidSquare(gameStart, attack);
       else {
         playerTurn = true;
         ui.setInactivePlayer('computer', 'player');
       }
     };
 
-    const wait = delay => new Promise(resolve => setTimeout(resolve, delay));
-
-    const findValidSquare = async () => {
-      try {
-        await wait(500);
-        if (!gameStart) return;
-        const availablePositions = [];
-        player.gameboardArr.map(
-          obj => !obj.isShot && availablePositions.push(obj)
-        );
-        const coords = player.getCoords(availablePositions);
-        const position = availablePositions.find(
-          obj => obj.position === coords
-        );
-        position ? attack(position, coords) : findValidSquare();
-      } catch (err) {
-        console.error(err);
-      }
-    };
-    findValidSquare();
+    player.findValidSquare(gameStart, attack);
   };
 
   const markSunk = (user, userStr, position) => {
@@ -158,5 +140,4 @@ export const App = () => {
   createGameboard(computer.gameboardArr, 'computer');
   createShips(player.shipsArr);
   shipEvents(player.shipsArr, player.gameboardArr);
-  computer.randomPlacement();
 };
