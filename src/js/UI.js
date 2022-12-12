@@ -1,3 +1,5 @@
+import { polyfill } from 'mobile-drag-drop';
+
 export const UI = () => {
   const playerContainer = document.getElementById('playerContainer');
   const computerContainer = document.getElementById('computerContainer');
@@ -217,3 +219,5 @@ export const UI = () => {
     setInactivePlayer,
   };
 };
+
+polyfill();

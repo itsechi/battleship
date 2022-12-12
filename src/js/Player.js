@@ -32,6 +32,6 @@ export const Player = () => {
     placeShip,
     randomPlacement,
     findValidSquare,
-    checkAdjacentSquares
+    checkAdjacentSquares,
   };
 };

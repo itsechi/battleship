@@ -104,8 +104,9 @@ export const App = () => {
       ui.removeMissedClass();
       finishGame();
       // if (position.hasShip) player.findValidSquare(gameStart, attack);
-      console.log(position, coords)
-      if (position.hasShip) player.checkAdjacentSquares(gameStart, coords, attack);
+      console.log(position, coords);
+      if (position.hasShip)
+        player.checkAdjacentSquares(gameStart, coords, attack);
       else {
         playerTurn = true;
         ui.setInactivePlayer('computer', 'player');
