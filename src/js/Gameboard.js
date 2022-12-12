@@ -33,6 +33,7 @@ export const Gameboard = () => {
         : positionY + '-' + (positionX + i);
       const shipSquares = gameboardArr.find(obj => obj.position === condition);
       shipPositions.push(shipSquares);
+      ship.properties.shipPositions.push(shipSquares);
     }
 
     if (
@@ -126,27 +127,43 @@ export const Gameboard = () => {
       await wait(500);
       if (!gameStart) return;
       const position = gameboardArr.find(obj => obj.position === coords);
-      const positionX = +position.position.split('-')[1];
-      const positionY = +position.position.split('-')[0];
-      const getPosition = (y, x) => {
-        return gameboardArr.find(obj => obj.position === y + '-' + x);
-      };
-      const adjacentPositions = [
-        getPosition(positionY - 1, positionX),
-        getPosition(positionY + 1, positionX),
-        getPosition(positionY, positionX - 1),
-        getPosition(positionY, positionX + 1),
-      ];
-      const filteredPositions = adjacentPositions.filter(
-        obj => obj && !obj.isShot
+
+      const shipHitPositions = position.hasShip.properties.shipPositions.filter(
+        obj => obj.isShot
       );
-      if (filteredPositions.length <= 0) findValidSquare(gameStart, helper);
-      else {
-        const newCoords = getCoords(filteredPositions);
-        const newPosition = gameboardArr.find(
-          obj => obj.position === newCoords
+      // check if ship has been hit at least two times, if yes then hit the next square in a row/column
+      if (shipHitPositions.length >= 2 && !position.hasShip.isSunk()) {
+        const nextHit = position.hasShip.properties.shipPositions.find(
+          obj => !obj.isShot
         );
-        helper(newPosition, newCoords);
+        nextHit && helper(nextHit, nextHit.position);
+      }
+      // if it hasn't been hit, attack adjacent squares
+      else {
+        const positionX = +position.position.split('-')[1];
+        const positionY = +position.position.split('-')[0];
+        const getPosition = (y, x) => {
+          return gameboardArr.find(obj => obj.position === y + '-' + x);
+        };
+        const adjacentPositions = [
+          getPosition(positionY - 1, positionX),
+          getPosition(positionY + 1, positionX),
+          getPosition(positionY, positionX - 1),
+          getPosition(positionY, positionX + 1),
+        ];
+        const filteredPositions = adjacentPositions.filter(
+          obj => obj && !obj.isShot
+        );
+        // if there are no adjacent squares available, find a random position
+        if (filteredPositions.length <= 0) findValidSquare(gameStart, helper);
+        // if adjacent squares are available, attack one randomly
+        else {
+          const newCoords = getCoords(filteredPositions);
+          const newPosition = gameboardArr.find(
+            obj => obj.position === newCoords
+          );
+          helper(newPosition, newCoords);
+        }
       }
     } catch (err) {
       console.error(err);

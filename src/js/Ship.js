@@ -5,6 +5,7 @@ export const Ship = (length, id) => {
     hits: 0,
     isVertical: false,
     isPlaced: false,
+    shipPositions: [],
     adjacentPositions: [],
   };
 
