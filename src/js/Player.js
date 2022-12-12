@@ -10,6 +10,7 @@ export const Player = () => {
   const getCoords = gameboard.getCoords;
   const randomPlacement = gameboard.randomPlacement;
   const findValidSquare = gameboard.findValidSquare;
+  const checkAdjacentSquares = gameboard.checkAdjacentSquares;
   const shipsArr = [
     Ship(4, 0),
     Ship(3, 1),
@@ -31,5 +32,6 @@ export const Player = () => {
     placeShip,
     randomPlacement,
     findValidSquare,
+    checkAdjacentSquares
   };
 };

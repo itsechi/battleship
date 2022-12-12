@@ -105,8 +105,9 @@ export const Gameboard = () => {
     });
   };
 
+  const wait = delay => new Promise(resolve => setTimeout(resolve, delay));
+
   const findValidSquare = async (gameStart, helper) => {
-    const wait = delay => new Promise(resolve => setTimeout(resolve, delay));
     try {
       await wait(500);
       if (!gameStart) return;
@@ -114,8 +115,39 @@ export const Gameboard = () => {
       gameboardArr.map(obj => !obj.isShot && availablePositions.push(obj));
       const coords = getCoords(availablePositions);
       const position = availablePositions.find(obj => obj.position === coords);
-      console.log(position);
       position ? helper(position, coords) : findValidSquare(gameStart, helper);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const checkAdjacentSquares = async (gameStart, coords, helper) => {
+    try {
+      await wait(500);
+      if (!gameStart) return;
+      const position = gameboardArr.find(obj => obj.position === coords);
+      const positionX = +position.position.split('-')[1];
+      const positionY = +position.position.split('-')[0];
+      const getPosition = (y, x) => {
+        return gameboardArr.find(obj => obj.position === y + '-' + x);
+      };
+      const adjacentPositions = [
+        getPosition(positionY - 1, positionX),
+        getPosition(positionY + 1, positionX),
+        getPosition(positionY, positionX - 1),
+        getPosition(positionY, positionX + 1),
+      ];
+      const filteredPositions = adjacentPositions.filter(
+        obj => obj && !obj.isShot
+      );
+      if (filteredPositions.length <= 0) findValidSquare(gameStart, helper);
+      else {
+        const newCoords = getCoords(filteredPositions);
+        const newPosition = gameboardArr.find(
+          obj => obj.position === newCoords
+        );
+        helper(newPosition, newCoords);
+      }
     } catch (err) {
       console.error(err);
     }
@@ -129,5 +161,6 @@ export const Gameboard = () => {
     getCoords,
     randomPlacement,
     findValidSquare,
+    checkAdjacentSquares,
   };
 };
